@@ -1,0 +1,13 @@
+name: avcodec
+version: 0.1.0
+
+authors:
+  - D. Scott Boggs <scott@tams.tech>
+
+dependencies:
+  bindgen:
+    github: Papierkorb/bindgen
+
+crystal: 0.27.2
+
+license: MIT

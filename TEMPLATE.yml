@@ -1,0 +1,340 @@
+# Configuration template - Base your bindgen configuration on this!
+
+# A note on templates: Some values are "templated".  This means they're of type
+# `String`.  All occurences of the percent-sign ("%") will be replaced by a
+# computed value.
+# Additionally, templated strings allow access to environment variables  using
+# curly braces: `{CC}` would be expanded to the value of `ENV["CC"]`.  It's
+# possible to provide a fall back value, which is used only if the given
+# environment variable doesn't exist: `{CC|gcc}` would expand to `ENV["CC"]`,
+# or if it is not set, to `gcc`.  You can also put a percent-sign in there:
+# `{LIBRARY_PATH|%}` will expand to `ENV["LIBRARY_PATH"]`, or to the replacement
+# value otherwise.
+
+# Defines the `module X` into which *all* code will be put.
+#   Mandatory!
+module: AvCodec
+
+# Defines how conversions in C/C++ shall happen.  Use `boehmgc-cpp` for C++,
+# or `boehmgc-c` for pure C.
+#
+# Don't worry too much about this setting at first.
+cookbook: boehmgc-c
+
+# Defines the `ld_flags` value for the `@[Link]` directive of the generated `lib`.
+# `%` will be replaced by the path to the base-directory of your project,
+# relative to the path of the generated `.cr` file.
+library: "-lavcodec-ffmpeg -lavformat-ffmpeg -lavutil -lswresample %/ext/binding.a"
+
+# Processors pipeline.  See `README.md` for details on each.
+# Defaults to the following:
+processors:
+  # Graph-refining processors:
+  - default_constructor # Create default constructors where possible
+  - function_class # Turn OOP-y C APIs into real classes
+  - inheritance # Mirror inheritance hierarchy from C++
+  - copy_structs # Copy structures as marked
+  - macros # Support for macro mapping
+  - functions # Add non-class functions
+  - filter_methods # Throw out filtered methods
+  - extern_c # Directly bind to pure C functions
+  - instantiate_containers # Actually instantiate containers
+  - enums # Add enums
+  # Preliminary generation processors:
+  - crystal_wrapper # Create Crystal wrappers
+  - virtual_override # Allow overriding C++ virtual methods
+  # - cpp_wrapper # Create C++ <-> C wrappers
+  - crystal_binding # Create `lib` bindings for the C wrapper
+  - sanity_check # Shows issues, if any
+
+# Generator configuration.  These write the actual output to disk.
+generators:
+  # C++ generator
+  cpp:
+    # Output file path  (Mandatory)
+    output: ext/my_bindings.cpp
+    # Output file preamble  (Optional)
+    preamble: |-
+      #include "bindgen_helper.hpp"
+    # Command to run after the generator.  (Optional!)
+    # Will be executed as-written in the output directory.
+    # If the command signals failure, bindgen will halt too.
+    build: make
+    # Small-ish bindings may get away without a custom Makefile:
+    # build: "{CXX|c++} -std=c++11 -c -o binding.o -lMyLib my_bindings.cpp"
+    # Do you have complex dependencies?  Use a conditional!
+    # if_os_is_windows: # Read the `YAML configuration` section in README.md
+    #   build: mingw-make
+  # Crystal generator.  Configuration style is exactly the same.
+  crystal:
+    # You'll most likely only need the `output` option.
+    output: src/libavcodec/binding.cr
+
+# This lets you find paths to your dependencies.  If you don't need it, just
+# omit it.
+find_paths:
+  # The key is the environment variable a match will be put into.  These are
+  # exposed to build-steps, so you can access them in e.g. a Makefile.  You can
+  # also access these in all templated strings, just as if you set it right
+  # away.
+  # If an environment variable of this name is already set, and is not empty,
+  # the match will *not* run!  This allows your users to supply a path easily
+  # to non-standard installations.
+  #
+  # The searches are run in the order they're defined.  Thus, later searches
+  # have access to the result of previous searches by accessing the environment
+  # variable they assigned to.
+  #
+  # Attention when using conditionals: The conditionals are evaluated first,
+  # then these paths are found.  This means that you can't check for a found
+  # path in a conditional!
+  #
+  # All regular expressions in this section are matche case-sensitive and are
+  # in multi-line mode (`^` will always match at the beginning of a line).
+  # AV_CODEC:
+  #   error_message: Couldn't find libavcodec in /usr/include/
+  #   search_path: /usr/include/libavcodec:%/ext/libavcodec
+  # AV_UTIL:
+  #   error_message: Couldn't find libavutil in /usr/include/
+  #   search_path: /usr/include/libavutil:%/ext/libavutil
+  # AV_DEVICE:
+  #   error_message: Couldn't find libavdevice in /usr/include/
+  #   search_path: /usr/include/libavdevice:%/ext/libavdevice
+  # AV_FILTE:
+  #   error_message: Couldn't find libavdevice in /usr/include/
+  #   search_path: /usr/include/libavdevice:%/ext/libavdevice
+    
+  LIB_AV:
+    error_message: Couldn't find libav in /usr/include
+    search_path: /usr/include/libav*
+  
+# Map of enums to copy.
+enums:
+#   # Maps from the name of the C++ enum, to the Crystal enum.
+#   # `CrystalEnumName` can reside in a wrapped class.
+#   CppEnumName: Crystal::Enum::Name
+#   # Or the full configuration:
+#   CppEnumName:
+#     # Destintation path of the enum.  Can be in a class too.
+#     destination: Crystal::Enum::Name
+#     # Prefix removal:  If `true`, the prefix is detected automatically.  If a
+#     # string, it's used as prefix.  A prefix of a constant name is only removed
+#     # if the given prefix matches the constants name.  Else, it's left alone.
+#     # Defaults to `false` for no prefix removal.
+#     prefix: true | false | ThePrefixString_
+#     # If to force a specific `@[Flags]` behaviour.  If `true`, will force it to
+#     # be a flags enum.  `false` will force it to *not* be a flags enum.
+#     # Omitting this option (Leaving it literally unset) will default to what the
+#     # clang parser decided it to be.
+#     # Flags detection is Qt specific: A enum is only then detected to be a flags
+#     # enum, if it's used in a `QFlags<E>` template.
+#     # Defaults to being unset.
+#     flags: true | false | unset
+  AVCodecID:
+    destination: AVCodec::ID
+    prefix: AV_CODEC_ID
+
+# Map of macros (`#define`s) to copy.  Requires the `macros` processor.
+macros:
+#  # Maps from a *regular expression*.  Rules are tried in the order they're
+#  # defined in the configuration file.  The expression must match the whole name
+#  # of the macro case-sensitively to be copied.
+#  "FOO_BAR_(.*)":
+#    # How to map matching macros:  Either put all into an enum, or as constant.
+#    map_as: Enum | Constant
+#    # Only if mapping as enum:  Treat as @[Flags] enum?
+#    # Defaults to `false`.
+#    flags: true | false
+#    # If mapping as Enum, the type of the enumeration.  Defaults to "int".
+#    # If mapping as Constant, forces the type of all matched constants.
+#    # Otherwise defaults to automatic type deduction, done per constant.
+#    type: C++ type name
+#    # How the enum constants, or constants, name should end up.  Access to
+#    # capture groups in the regular expression is done using `\\n` to access the
+#    # n-th capture group.  The name will be post-processed automatically.
+#    #
+#    # If left out, the first capture group will be used.
+#    name: "\\1"
+#    # Where to store the matching constants.  For a enum, this is the path to
+#    # the enum itself (So, including the enums name).  For a constant, this is
+#    # the path to the class (or module) it will be stored in.
+#    destination: Foo::Bar
+
+# Map functions outside of classes.  Useful to map C functions and C++
+# namespaced functions as well.  Requires the `functions` (and `function_class`)
+# processor.
+functions:
+  # Matches all functions whose fully-qualified name matches the key.
+  # The qualified name of functions in the global scope is the function name
+  # itself: The qualified name of `void foo();` is `foo`.  For C++ namespaced
+  # methods, the qualified name includes the complete namespace path: The
+  # qualified name of `namespace foo { void bar(); }` is thus `foo::bar`.
+  #
+  # Just like macros, the first capture group defaults to be the resulting
+  # function name.  Without a capture group, the function name is copied.
+  "av_(.*)": AV
+#  "net_(.*)": Util::Net # Equal to: `"net_(.*)": { destination: "Util::Net" }`
+#   # If you want more control:
+#   "string_(.*)":
+#     # Set a custom name for the function.  You can access capture groups from
+#     # the regular expression above.  You can omit this option.
+#     name: "string_\\1" # E.g., transform `strlen()` to `string_len()`
+#     # Names also support further nesting, if you don't use `class:`:
+#     #   name: "\1::\2"
+#     # Destination module or class the functions should be put into.  If using
+#     # `class:`, the name of the class itself.
+#     destination: Util::StringBuffer
+#     # Method names are always underscored: `setTheThing` will be rewritten to
+#     # `set_the_thing`.  You can also rewrite the names to be more Crystal-style:
+#     # `setTheThing` would turn into `the_thing=`.
+#     # The value defaults to `true` if `class:` is used.  It is `false` otherwise.
+#     crystalize_names: true | false
+#     # You can also map all matched functions as class: With a little help,
+#     # bindgen can generate full wrapper classes!  If you don't want this,
+#     # leave the whole `class:` option out.
+#     # This feature requires the `function_class` processor.
+#     class:
+#       # Name of the backing structure.  The non-static functions take a pointer
+#       # to the structure as first argument.  Other functions are treated as
+#       # being static.
+#       structure: string_buffer
+#       # If this C library supports "inheritance", and you're also wrapping the
+#       # base class, put the name here.  Else, leave this out.
+#       inherit_from: Crystal::Type::Name
+#       # Name of constructor functions.  They're expected to *return* a pointer
+#       # to a new `structure:`.
+#       constructors:
+#         - string_new_empty
+#         - string_new_from_string
+#       # Name of the destructor (The "free" function).  The generated wrapper
+#       # will call this function in `#finalize`.
+#       destructor: string_free
+# 
+# List of container-types to wrap.  (Keyword: C++ Templates)
+# Requires the `instantiate_containers` processor.  Optionally, you can also use
+# the `auto_container_instantiation` processor before.
+containers:
+  - class: Name of the C++ class
+    type: "Sequential" or "Associative"
+    # access_method: C++ item access method.  Defaults to `at`.
+    # size_method: C++ container size method.  Defaults to `size`.
+    # push_method: C++ item append method.  Defaults to `push_back`.
+    instantiations: # All wanted instantiations of this container
+      # If using the `auto_container_instantiation` processor, this whole map
+      # can be omitted.  It's still required to define the container classes.
+      - [ "C++ type name" ]
+      # - [ "..." ]
+
+# Configuration for the C++ parser.
+parser:
+  # List of files to include.  Can be relative to search-paths.
+  # This is the only required option:
+  files:
+    - my_lib.h
+  # All of the following are optional:
+  #
+  # List of include search-paths.  If omitted, only the systems default paths
+  # will be searched.
+  includes:
+    - %/ext/include # `%` expands to the absolute project root path.
+  # Path to the `bindgen-clang` binary.
+  binary: path/to/bindgen-clang
+  # Additional Clang flags.  Defaults to C++11:
+  flags: [ "-x", "c++", "-std=c++11" ]
+  # Additional "#define"s passed to Clang.  Defaults to the following:
+  defines:
+    - __STDC_CONSTANT_MACROS
+    - __STDC_LIMIT_MACROS
+
+# Additional type configuration, of both explicitly wrapped types and all other
+# found types.  All fields are optional.
+# Commonly referred to "type rules", or just "rules" in the source code.
+#
+# The matched type names (The mapping keys) are best-matched:  You can have
+# separate rules for type `T*` and `T`.  If no matching rule is found, the match
+# is retried after decaying the type: `const T*&` to `T*&` to `T**` to `T*` to
+# `T`.
+# types:
+#   AVCodecDescriptor:
+#     kind: Struct
+# 
+#   FullCppTypeName: # Full name of the C++ Type (Like `std::string`)
+#     # Ignore everything else in this map, and look-up the other type for rules.
+#     alias_for: FullCppTypeName
+# 
+#     # If all methods found using this type shall be ignored.
+#     # Useful to quickly get started.
+#     ignore: true | false
+# 
+#     # Override the kind of this type.  Changes passing-behaviour.
+#     # Defaults to `Class`.
+#     kind: Class | Struct | Value | Enum
+# 
+#     # Name of this type in the wrapper.
+#     crystal_type: CrystalTypeName
+# 
+#     # Name of this type in the C++ binding.  Useful when used with converters.
+#     cpp_type: CppTypeName
+# 
+#     # Name of this type in `lib Binding`.
+#     binding_type: CrystalTypeName
+# 
+#     # Inserted into C++ to turn the type into something the `binding_type` will
+#     # be able to understand.  Template value is the whole C++ call.
+#     from_cpp: "convert_from_cpp(%)"
+# 
+#     # Inserted into C++ to turn the `binding_type` into something C++ can
+#     # understand.  Template value is the C++ argument name.
+#     to_cpp: "convert_to_cpp(%)"
+# 
+#     # Crystal converter module used to turn the binding-type into a crystal-type
+#     # and back.
+#     #
+#     # module TheConverter
+#     #   def wrap(value : CrystalType) : BindingType
+#     #   def unwrap(value : BindingType) : CrystalType
+#     # end
+#     converter: TheConverter
+# 
+#     # Pendant to `to_cpp` in Crystal.  `converter` takes precedence.
+#     # Template value is the whole binding call.
+#     to_crystal: "CrystalType.from_cpp(%)"
+# 
+#     # Pendant to `from_cpp` in Crystal.  `converter` takes precedence.
+#     # Template value is the wrapper argument.
+#     from_crystal: "%.to_cpp"
+# 
+#     # Override of the pass-by semantics.  Use with caution.  Usually not
+#     # required.  Defaults to `Original`.
+#     pass_by: Original | Reference | Pointer | Value
+# 
+#     # Override of the pass-by semantics only in the user-facing wrapper code.
+#     # Defaults to the value of `pass_by:` from above.
+#     wrapper_pass_by: Original | Reference | Pointer | Value
+# 
+#     # Enable or disable check if this type should be sub-classed to allow
+#     # overriding virtual methods of the wrapped type in Crystal.
+#     # If the type has no virtual methods, no sub-class will be generated.
+#     # Defaults to `true`.
+#     sub_class: true | false
+# 
+#     # Copy the read structure fields over to Crystal.  Useful for simple C-style
+#     # structures.  `struct` will end up in `Binding::BindingName`.
+#     # Defaults to `false`.
+#     copy_structure: true | false
+# 
+#     # Treat this type as built-in type in C++ and Crystal.
+#     # Defaults to `false`.
+#     builtin: true | false
+# 
+#     # Generate the user-facing wrapper class for this type.
+#     # Defaults to `true`.
+#     generate_wrapper: true | false
+# 
+#     # Generate the `fun` bindings of all wrapped methods of this type.
+#     # Defaults to `true`.
+#     generate_binding: true | false
+# 
+#     # List of methods to ignore in only this type when wrapping.
+#     ignore_methods:
+#       - some_method_name
