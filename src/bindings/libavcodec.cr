@@ -1181,17 +1181,17 @@ module AV
       apply_cropping : LibC::Int
     end
 
-    fun av_codec_get_pkt_timebase(AVCodecContext*) : AVRational
-    fun av_codec_set_pkt_timebase(AVCodecContext*, AVRational) : Void
-    fun av_codec_get_codec_descriptor(AVCodecContext*) : AVCodecDescriptor*
-    fun av_codec_set_codec_descriptor(AVCodecContext*, AVCodecDescriptor*) : Void
-    fun av_codec_get_codec_properties(AVCodecContext*) : LibC::UInt
-    fun av_codec_get_lowres(AVCodecContext*) : LibC::Int
-    fun av_codec_set_lowres(AVCodecContext*, LibC::Int) : Void
-    fun av_codec_get_seek_preroll(AVCodecContext*) : LibC::Int
-    fun av_codec_set_seek_preroll(AVCodecContext*, LibC::Int) : Void
-    fun av_codec_get_chroma_intra_matrix(AVCodecContext*) : UInt16*
-    fun av_codec_set_chroma_intra_matrix(AVCodecContext*, UInt16*) : Void
+    fun codec_get_pkt_timebase = av_codec_get_pkt_timebase(AVCodecContext*) : AVRational
+    fun codec_set_pkt_timebase = av_codec_set_pkt_timebase(AVCodecContext*, AVRational) : Void
+    fun codec_get_codec_descriptor = av_codec_get_codec_descriptor(AVCodecContext*) : AVCodecDescriptor*
+    fun codec_set_codec_descriptor = av_codec_set_codec_descriptor(AVCodecContext*, AVCodecDescriptor*) : Void
+    fun codec_get_codec_properties = av_codec_get_codec_properties(AVCodecContext*) : LibC::UInt
+    fun codec_get_lowres = av_codec_get_lowres(AVCodecContext*) : LibC::Int
+    fun codec_set_lowres = av_codec_set_lowres(AVCodecContext*, LibC::Int) : Void
+    fun codec_get_seek_preroll = av_codec_get_seek_preroll(AVCodecContext*) : LibC::Int
+    fun codec_set_seek_preroll = av_codec_set_seek_preroll(AVCodecContext*, LibC::Int) : Void
+    fun codec_get_chroma_intra_matrix = av_codec_get_chroma_intra_matrix(AVCodecContext*) : UInt16*
+    fun codec_set_chroma_intra_matrix = av_codec_set_chroma_intra_matrix(AVCodecContext*, UInt16*) : Void
 
     struct AVProfile
       profile : LibC::Int
@@ -1234,7 +1234,7 @@ module AV
       bsfs : LibC::Char*
     end
 
-    fun av_codec_get_max_lowres(AVCodec*) : LibC::Int
+    fun codec_get_max_lowres = av_codec_get_max_lowres(AVCodec*) : LibC::Int
     type MpegEncContext = Void
 
     struct AVHWAccel
@@ -1324,69 +1324,69 @@ module AV
       seek_preroll : LibC::Int
     end
 
-    fun av_codec_next(AVCodec*) : AVCodec*
-    fun avcodec_version : LibC::UInt
-    fun avcodec_configuration : LibC::Char*
-    fun avcodec_license : LibC::Char*
-    fun avcodec_register(AVCodec*) : Void
-    fun avcodec_register_all : Void
-    fun avcodec_alloc_context3(AVCodec*) : AVCodecContext*
-    fun avcodec_free_context(AVCodecContext**) : Void
-    fun avcodec_get_context_defaults3(AVCodecContext*, AVCodec*) : LibC::Int
-    fun avcodec_get_class : AVClass*
-    fun avcodec_get_frame_class : AVClass*
-    fun avcodec_get_subtitle_rect_class : AVClass*
-    fun avcodec_copy_context(AVCodecContext*, AVCodecContext*) : LibC::Int
-    fun avcodec_parameters_alloc : AVCodecParameters*
-    fun avcodec_parameters_free(AVCodecParameters**) : Void
-    fun avcodec_parameters_copy(AVCodecParameters*, AVCodecParameters*) : LibC::Int
-    fun avcodec_parameters_from_context(AVCodecParameters*, AVCodecContext*) : LibC::Int
-    fun avcodec_parameters_to_context(AVCodecContext*, AVCodecParameters*) : LibC::Int
-    fun avcodec_open2(AVCodecContext*, AVCodec*, AVDictionary**) : LibC::Int
-    fun avcodec_close(AVCodecContext*) : LibC::Int
+    fun codec_next = av_codec_next(AVCodec*) : AVCodec*
+    fun version = av_codec_version : LibC::UInt
+    fun configuration = av_codec_configuration : LibC::Char*
+    fun license = av_codec_license : LibC::Char*
+    fun register = av_codec_register(AVCodec*) : Void
+    fun register_all = av_codec_register_all : Void
+    fun alloc_context3 = av_codec_alloc_context3(AVCodec*) : AVCodecContext*
+    fun free_context = av_codec_free_context(AVCodecContext**) : Void
+    fun get_context_defaults3 = av_codec_get_context_defaults3(AVCodecContext*, AVCodec*) : LibC::Int
+    fun get_class = av_codec_get_class : AVClass*
+    fun get_frame_class = av_codec_get_frame_class : AVClass*
+    fun get_subtitle_rect_class = av_codec_get_subtitle_rect_class : AVClass*
+    fun copy_context = av_codec_copy_context(AVCodecContext*, AVCodecContext*) : LibC::Int
+    fun parameters_alloc = av_codec_parameters_alloc : AVCodecParameters*
+    fun parameters_free = av_codec_parameters_free(AVCodecParameters**) : Void
+    fun parameters_copy = av_codec_parameters_copy(AVCodecParameters*, AVCodecParameters*) : LibC::Int
+    fun parameters_from_context = av_codec_parameters_from_context(AVCodecParameters*, AVCodecContext*) : LibC::Int
+    fun parameters_to_context = av_codec_parameters_to_context(AVCodecContext*, AVCodecParameters*) : LibC::Int
+    fun open2 = av_codec_open2(AVCodecContext*, AVCodec*, AVDictionary**) : LibC::Int
+    fun close = av_codec_close(AVCodecContext*) : LibC::Int
     fun avsubtitle_free(AVSubtitle*) : Void
-    fun av_packet_alloc : AVPacket*
-    fun av_packet_clone(AVPacket*) : AVPacket*
-    fun av_packet_free(AVPacket**) : Void
-    fun av_init_packet(AVPacket*) : Void
-    fun av_new_packet(AVPacket*, LibC::Int) : LibC::Int
-    fun av_shrink_packet(AVPacket*, LibC::Int) : Void
-    fun av_grow_packet(AVPacket*, LibC::Int) : LibC::Int
-    fun av_packet_from_data(AVPacket*, UInt8*, LibC::Int) : LibC::Int
-    fun av_dup_packet(AVPacket*) : LibC::Int
-    fun av_copy_packet(AVPacket*, AVPacket*) : LibC::Int
-    fun av_copy_packet_side_data(AVPacket*, AVPacket*) : LibC::Int
-    fun av_free_packet(AVPacket*) : Void
-    fun av_packet_new_side_data(AVPacket*, AVPacketSideDataType, LibC::Int) : UInt8*
-    fun av_packet_add_side_data(AVPacket*, AVPacketSideDataType, UInt8*, SizeT) : LibC::Int
-    fun av_packet_shrink_side_data(AVPacket*, AVPacketSideDataType, LibC::Int) : LibC::Int
-    fun av_packet_get_side_data(AVPacket*, AVPacketSideDataType, LibC::Int*) : UInt8*
-    fun av_packet_merge_side_data(AVPacket*) : LibC::Int
-    fun av_packet_split_side_data(AVPacket*) : LibC::Int
-    fun av_packet_side_data_name(AVPacketSideDataType) : LibC::Char*
-    fun av_packet_pack_dictionary(AVDictionary*, LibC::Int*) : UInt8*
-    fun av_packet_unpack_dictionary(UInt8*, LibC::Int, AVDictionary**) : LibC::Int
-    fun av_packet_free_side_data(AVPacket*) : Void
-    fun av_packet_ref(AVPacket*, AVPacket*) : LibC::Int
-    fun av_packet_unref(AVPacket*) : Void
-    fun av_packet_move_ref(AVPacket*, AVPacket*) : Void
-    fun av_packet_copy_props(AVPacket*, AVPacket*) : LibC::Int
-    fun av_packet_rescale_ts(AVPacket*, AVRational, AVRational) : Void
-    fun avcodec_find_decoder(AVCodecID) : AVCodec*
-    fun avcodec_find_decoder_by_name(LibC::Char*) : AVCodec*
-    fun avcodec_default_get_buffer2(AVCodecContext*, AVFrame*, LibC::Int) : LibC::Int
-    fun avcodec_get_edge_width : LibC::UInt
-    fun avcodec_align_dimensions(AVCodecContext*, LibC::Int*, LibC::Int*) : Void
-    fun avcodec_align_dimensions2(AVCodecContext*, LibC::Int*, LibC::Int*, StaticArray(LibC::Int, 8)) : Void
-    fun avcodec_enum_to_chroma_pos(LibC::Int*, LibC::Int*, AVChromaLocation) : LibC::Int
-    fun avcodec_chroma_pos_to_enum(LibC::Int, LibC::Int) : AVChromaLocation
-    fun avcodec_decode_audio4(AVCodecContext*, AVFrame*, LibC::Int*, AVPacket*) : LibC::Int
-    fun avcodec_decode_video2(AVCodecContext*, AVFrame*, LibC::Int*, AVPacket*) : LibC::Int
-    fun avcodec_decode_subtitle2(AVCodecContext*, AVSubtitle*, LibC::Int*, AVPacket*) : LibC::Int
-    fun avcodec_send_packet(AVCodecContext*, AVPacket*) : LibC::Int
-    fun avcodec_receive_frame(AVCodecContext*, AVFrame*) : LibC::Int
-    fun avcodec_send_frame(AVCodecContext*, AVFrame*) : LibC::Int
-    fun avcodec_receive_packet(AVCodecContext*, AVPacket*) : LibC::Int
+    fun packet_alloc = av_packet_alloc : AVPacket*
+    fun packet_clone = av_packet_clone(AVPacket*) : AVPacket*
+    fun packet_free = av_packet_free(AVPacket**) : Void
+    fun init_packet = av_init_packet(AVPacket*) : Void
+    fun new_packet = av_new_packet(AVPacket*, LibC::Int) : LibC::Int
+    fun shrink_packet = av_shrink_packet(AVPacket*, LibC::Int) : Void
+    fun grow_packet = av_grow_packet(AVPacket*, LibC::Int) : LibC::Int
+    fun packet_from_data = av_packet_from_data(AVPacket*, UInt8*, LibC::Int) : LibC::Int
+    fun dup_packet = av_dup_packet(AVPacket*) : LibC::Int
+    fun copy_packet = av_copy_packet(AVPacket*, AVPacket*) : LibC::Int
+    fun copy_packet_side_data = av_copy_packet_side_data(AVPacket*, AVPacket*) : LibC::Int
+    fun free_packet = av_free_packet(AVPacket*) : Void
+    fun packet_new_side_data = av_packet_new_side_data(AVPacket*, AVPacketSideDataType, LibC::Int) : UInt8*
+    fun packet_add_side_data = av_packet_add_side_data(AVPacket*, AVPacketSideDataType, UInt8*, SizeT) : LibC::Int
+    fun packet_shrink_side_data = av_packet_shrink_side_data(AVPacket*, AVPacketSideDataType, LibC::Int) : LibC::Int
+    fun packet_get_side_data = av_packet_get_side_data(AVPacket*, AVPacketSideDataType, LibC::Int*) : UInt8*
+    fun packet_merge_side_data = av_packet_merge_side_data(AVPacket*) : LibC::Int
+    fun packet_split_side_data = av_packet_split_side_data(AVPacket*) : LibC::Int
+    fun packet_side_data_name = av_packet_side_data_name(AVPacketSideDataType) : LibC::Char*
+    fun packet_pack_dictionary = av_packet_pack_dictionary(AVDictionary*, LibC::Int*) : UInt8*
+    fun packet_unpack_dictionary = av_packet_unpack_dictionary(UInt8*, LibC::Int, AVDictionary**) : LibC::Int
+    fun packet_free_side_data = av_packet_free_side_data(AVPacket*) : Void
+    fun packet_ref = av_packet_ref(AVPacket*, AVPacket*) : LibC::Int
+    fun packet_unref = av_packet_unref(AVPacket*) : Void
+    fun packet_move_ref = av_packet_move_ref(AVPacket*, AVPacket*) : Void
+    fun packet_copy_props = av_packet_copy_props(AVPacket*, AVPacket*) : LibC::Int
+    fun packet_rescale_ts = av_packet_rescale_ts(AVPacket*, AVRational, AVRational) : Void
+    fun find_decoder = av_codec_find_decoder(AVCodecID) : AVCodec*
+    fun find_decoder_by_name = av_codec_find_decoder_by_name(LibC::Char*) : AVCodec*
+    fun default_get_buffer2 = av_codec_default_get_buffer2(AVCodecContext*, AVFrame*, LibC::Int) : LibC::Int
+    fun get_edge_width = av_codec_get_edge_width : LibC::UInt
+    fun align_dimensions = av_codec_align_dimensions(AVCodecContext*, LibC::Int*, LibC::Int*) : Void
+    fun align_dimensions2 = av_codec_align_dimensions2(AVCodecContext*, LibC::Int*, LibC::Int*, StaticArray(LibC::Int, 8)) : Void
+    fun enum_to_chroma_pos = av_codec_enum_to_chroma_pos(LibC::Int*, LibC::Int*, AVChromaLocation) : LibC::Int
+    fun chroma_pos_to_enum = av_codec_chroma_pos_to_enum(LibC::Int, LibC::Int) : AVChromaLocation
+    fun decode_audio4 = av_codec_decode_audio4(AVCodecContext*, AVFrame*, LibC::Int*, AVPacket*) : LibC::Int
+    fun decode_video2 = av_codec_decode_video2(AVCodecContext*, AVFrame*, LibC::Int*, AVPacket*) : LibC::Int
+    fun decode_subtitle2 = av_codec_decode_subtitle2(AVCodecContext*, AVSubtitle*, LibC::Int*, AVPacket*) : LibC::Int
+    fun send_packet = av_codec_send_packet(AVCodecContext*, AVPacket*) : LibC::Int
+    fun receive_frame = av_codec_receive_frame(AVCodecContext*, AVFrame*) : LibC::Int
+    fun send_frame = av_codec_send_frame(AVCodecContext*, AVFrame*) : LibC::Int
+    fun receive_packet = av_codec_receive_packet(AVCodecContext*, AVPacket*) : LibC::Int
     enum AVPictureStructure : LibC::UInt
       UNKNOWN      = 0
       TOP_FIELD    = 1
@@ -1443,55 +1443,55 @@ module AV
       next : AVCodecParser*
     end
 
-    fun av_parser_next(AVCodecParser*) : AVCodecParser*
-    fun av_register_codec_parser(AVCodecParser*) : Void
-    fun av_parser_init(LibC::Int) : AVCodecParserContext*
-    fun av_parser_parse2(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, Int64, Int64, Int64) : LibC::Int
-    fun av_parser_change(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
-    fun av_parser_close(AVCodecParserContext*) : Void
-    fun avcodec_find_encoder(AVCodecID) : AVCodec*
-    fun avcodec_find_encoder_by_name(LibC::Char*) : AVCodec*
-    fun avcodec_encode_audio2(AVCodecContext*, AVPacket*, AVFrame*, LibC::Int*) : LibC::Int
-    fun avcodec_encode_video2(AVCodecContext*, AVPacket*, AVFrame*, LibC::Int*) : LibC::Int
-    fun avcodec_encode_subtitle(AVCodecContext*, UInt8*, LibC::Int, AVSubtitle*) : LibC::Int
+    fun parser_next = av_parser_next(AVCodecParser*) : AVCodecParser*
+    fun register_codec_parser = av_register_codec_parser(AVCodecParser*) : Void
+    fun parser_init = av_parser_init(LibC::Int) : AVCodecParserContext*
+    fun parser_parse2 = av_parser_parse2(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, Int64, Int64, Int64) : LibC::Int
+    fun parser_change = av_parser_change(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
+    fun parser_close = av_parser_close(AVCodecParserContext*) : Void
+    fun find_encoder = av_codec_find_encoder(AVCodecID) : AVCodec*
+    fun find_encoder_by_name = av_codec_find_encoder_by_name(LibC::Char*) : AVCodec*
+    fun encode_audio2 = av_codec_encode_audio2(AVCodecContext*, AVPacket*, AVFrame*, LibC::Int*) : LibC::Int
+    fun encode_video2 = av_codec_encode_video2(AVCodecContext*, AVPacket*, AVFrame*, LibC::Int*) : LibC::Int
+    fun encode_subtitle = av_codec_encode_subtitle(AVCodecContext*, UInt8*, LibC::Int, AVSubtitle*) : LibC::Int
     type ReSampleContext = Void
     type AVResampleContext = Void
-    fun av_audio_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, AVSampleFormat, AVSampleFormat, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : ReSampleContext*
+    fun audio_resample_init = av_audio_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, AVSampleFormat, AVSampleFormat, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : ReSampleContext*
     fun audio_resample(ReSampleContext*, LibC::Short*, LibC::Short*, LibC::Int) : LibC::Int
     fun audio_resample_close(ReSampleContext*) : Void
-    fun av_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : AVResampleContext*
-    fun av_resample(AVResampleContext*, LibC::Short*, LibC::Short*, LibC::Int*, LibC::Int, LibC::Int, LibC::Int) : LibC::Int
-    fun av_resample_compensate(AVResampleContext*, LibC::Int, LibC::Int) : Void
-    fun av_resample_close(AVResampleContext*) : Void
+    fun resample_init = av_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : AVResampleContext*
+    fun resample = av_resample(AVResampleContext*, LibC::Short*, LibC::Short*, LibC::Int*, LibC::Int, LibC::Int, LibC::Int) : LibC::Int
+    fun resample_compensate = av_resample_compensate(AVResampleContext*, LibC::Int, LibC::Int) : Void
+    fun resample_close = av_resample_close(AVResampleContext*) : Void
     fun avpicture_alloc(AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
     fun avpicture_free(AVPicture*) : Void
     fun avpicture_fill(AVPicture*, UInt8*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
     fun avpicture_layout(AVPicture*, AVPixelFormat, LibC::Int, LibC::Int, LibC::Char*, LibC::Int) : LibC::Int
     fun avpicture_get_size(AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
-    fun av_picture_copy(AVPicture*, AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : Void
-    fun av_picture_crop(AVPicture*, AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
-    fun av_picture_pad(AVPicture*, AVPicture*, LibC::Int, LibC::Int, AVPixelFormat, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int*) : LibC::Int
-    fun avcodec_get_chroma_sub_sample(AVPixelFormat, LibC::Int*, LibC::Int*) : Void
-    fun avcodec_pix_fmt_to_codec_tag(AVPixelFormat) : LibC::UInt
-    fun avcodec_get_pix_fmt_loss(AVPixelFormat, AVPixelFormat, LibC::Int) : LibC::Int
-    fun avcodec_find_best_pix_fmt_of_list(AVPixelFormat*, AVPixelFormat, LibC::Int, LibC::Int*) : AVPixelFormat
-    fun avcodec_find_best_pix_fmt_of_2(AVPixelFormat, AVPixelFormat, AVPixelFormat, LibC::Int, LibC::Int*) : AVPixelFormat
-    fun avcodec_find_best_pix_fmt2(AVPixelFormat, AVPixelFormat, AVPixelFormat, LibC::Int, LibC::Int*) : AVPixelFormat
-    fun avcodec_default_get_format(AVCodecContext*, AVPixelFormat*) : AVPixelFormat
-    fun avcodec_set_dimensions(AVCodecContext*, LibC::Int, LibC::Int) : Void
-    fun av_get_codec_tag_string(LibC::Char*, SizeT, LibC::UInt) : SizeT
-    fun avcodec_string(LibC::Char*, LibC::Int, AVCodecContext*, LibC::Int) : Void
-    fun av_get_profile_name(AVCodec*, LibC::Int) : LibC::Char*
-    fun avcodec_profile_name(AVCodecID, LibC::Int) : LibC::Char*
-    fun avcodec_default_execute(AVCodecContext*, AVCodecContextExecuteProc, Void*, LibC::Int*, LibC::Int, LibC::Int) : LibC::Int
-    fun avcodec_default_execute2(AVCodecContext*, AVCodecContextExecute2Proc, Void*, LibC::Int*, LibC::Int) : LibC::Int
-    fun avcodec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, UInt8*, LibC::Int, LibC::Int) : LibC::Int
-    fun avcodec_flush_buffers(AVCodecContext*) : Void
-    fun av_get_bits_per_sample(AVCodecID) : LibC::Int
-    fun av_get_pcm_codec(AVSampleFormat, LibC::Int) : AVCodecID
-    fun av_get_exact_bits_per_sample(AVCodecID) : LibC::Int
-    fun av_get_audio_frame_duration(AVCodecContext*, LibC::Int) : LibC::Int
-    fun av_get_audio_frame_duration2(AVCodecParameters*, LibC::Int) : LibC::Int
+    fun picture_copy = av_picture_copy(AVPicture*, AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : Void
+    fun picture_crop = av_picture_crop(AVPicture*, AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
+    fun picture_pad = av_picture_pad(AVPicture*, AVPicture*, LibC::Int, LibC::Int, AVPixelFormat, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int*) : LibC::Int
+    fun get_chroma_sub_sample = av_codec_get_chroma_sub_sample(AVPixelFormat, LibC::Int*, LibC::Int*) : Void
+    fun pix_fmt_to_codec_tag = av_codec_pix_fmt_to_codec_tag(AVPixelFormat) : LibC::UInt
+    fun get_pix_fmt_loss = av_codec_get_pix_fmt_loss(AVPixelFormat, AVPixelFormat, LibC::Int) : LibC::Int
+    fun find_best_pix_fmt_of_list = av_codec_find_best_pix_fmt_of_list(AVPixelFormat*, AVPixelFormat, LibC::Int, LibC::Int*) : AVPixelFormat
+    fun find_best_pix_fmt_of_2 = av_codec_find_best_pix_fmt_of_2(AVPixelFormat, AVPixelFormat, AVPixelFormat, LibC::Int, LibC::Int*) : AVPixelFormat
+    fun find_best_pix_fmt2 = av_codec_find_best_pix_fmt2(AVPixelFormat, AVPixelFormat, AVPixelFormat, LibC::Int, LibC::Int*) : AVPixelFormat
+    fun default_get_format = av_codec_default_get_format(AVCodecContext*, AVPixelFormat*) : AVPixelFormat
+    fun set_dimensions = av_codec_set_dimensions(AVCodecContext*, LibC::Int, LibC::Int) : Void
+    fun get_codec_tag_string = av_get_codec_tag_string(LibC::Char*, SizeT, LibC::UInt) : SizeT
+    fun string = av_codec_string(LibC::Char*, LibC::Int, AVCodecContext*, LibC::Int) : Void
+    fun get_profile_name = av_get_profile_name(AVCodec*, LibC::Int) : LibC::Char*
+    fun profile_name = av_codec_profile_name(AVCodecID, LibC::Int) : LibC::Char*
+    fun default_execute = av_codec_default_execute(AVCodecContext*, AVCodecContextExecuteProc, Void*, LibC::Int*, LibC::Int, LibC::Int) : LibC::Int
+    fun default_execute2 = av_codec_default_execute2(AVCodecContext*, AVCodecContextExecute2Proc, Void*, LibC::Int*, LibC::Int) : LibC::Int
+    fun fill_audio_frame = av_codec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, UInt8*, LibC::Int, LibC::Int) : LibC::Int
+    fun flush_buffers = av_codec_flush_buffers(AVCodecContext*) : Void
+    fun get_bits_per_sample = av_get_bits_per_sample(AVCodecID) : LibC::Int
+    fun get_pcm_codec = av_get_pcm_codec(AVSampleFormat, LibC::Int) : AVCodecID
+    fun get_exact_bits_per_sample = av_get_exact_bits_per_sample(AVCodecID) : LibC::Int
+    fun get_audio_frame_duration = av_get_audio_frame_duration(AVCodecContext*, LibC::Int) : LibC::Int
+    fun get_audio_frame_duration2 = av_get_audio_frame_duration2(AVCodecParameters*, LibC::Int) : LibC::Int
 
     struct AVBitStreamFilterContext
       priv_data : Void*
@@ -1524,49 +1524,49 @@ module AV
       close : (AVBSFContext*) -> Void*
     end
 
-    fun av_register_bitstream_filter(AVBitStreamFilter*) : Void
-    fun av_bitstream_filter_init(LibC::Char*) : AVBitStreamFilterContext*
-    fun av_bitstream_filter_filter(AVBitStreamFilterContext*, AVCodecContext*, LibC::Char*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
-    fun av_bitstream_filter_close(AVBitStreamFilterContext*) : Void
-    fun av_bitstream_filter_next(AVBitStreamFilter*) : AVBitStreamFilter*
-    fun av_bsf_get_by_name(LibC::Char*) : AVBitStreamFilter*
-    fun av_bsf_next(Void**) : AVBitStreamFilter*
-    fun av_bsf_alloc(AVBitStreamFilter*, AVBSFContext**) : LibC::Int
-    fun av_bsf_init(AVBSFContext*) : LibC::Int
-    fun av_bsf_send_packet(AVBSFContext*, AVPacket*) : LibC::Int
-    fun av_bsf_receive_packet(AVBSFContext*, AVPacket*) : LibC::Int
-    fun av_bsf_free(AVBSFContext**) : Void
-    fun av_bsf_get_class : AVClass*
+    fun register_bitstream_filter = av_register_bitstream_filter(AVBitStreamFilter*) : Void
+    fun bitstream_filter_init = av_bitstream_filter_init(LibC::Char*) : AVBitStreamFilterContext*
+    fun bitstream_filter_filter = av_bitstream_filter_filter(AVBitStreamFilterContext*, AVCodecContext*, LibC::Char*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
+    fun bitstream_filter_close = av_bitstream_filter_close(AVBitStreamFilterContext*) : Void
+    fun bitstream_filter_next = av_bitstream_filter_next(AVBitStreamFilter*) : AVBitStreamFilter*
+    fun bsf_get_by_name = av_bsf_get_by_name(LibC::Char*) : AVBitStreamFilter*
+    fun bsf_next = av_bsf_next(Void**) : AVBitStreamFilter*
+    fun bsf_alloc = av_bsf_alloc(AVBitStreamFilter*, AVBSFContext**) : LibC::Int
+    fun bsf_init = av_bsf_init(AVBSFContext*) : LibC::Int
+    fun bsf_send_packet = av_bsf_send_packet(AVBSFContext*, AVPacket*) : LibC::Int
+    fun bsf_receive_packet = av_bsf_receive_packet(AVBSFContext*, AVPacket*) : LibC::Int
+    fun bsf_free = av_bsf_free(AVBSFContext**) : Void
+    fun bsf_get_class = av_bsf_get_class : AVClass*
     type AVBSFList = Void
-    fun av_bsf_list_alloc : AVBSFList*
-    fun av_bsf_list_free(AVBSFList**) : Void
-    fun av_bsf_list_append(AVBSFList*, AVBSFContext*) : LibC::Int
-    fun av_bsf_list_append2(AVBSFList*, LibC::Char*, AVDictionary**) : LibC::Int
-    fun av_bsf_list_finalize(AVBSFList**, AVBSFContext**) : LibC::Int
-    fun av_bsf_list_parse_str(LibC::Char*, AVBSFContext**) : LibC::Int
-    fun av_bsf_get_null_filter(AVBSFContext**) : LibC::Int
-    fun av_fast_padded_malloc(Void*, LibC::UInt*, SizeT) : Void
-    fun av_fast_padded_mallocz(Void*, LibC::UInt*, SizeT) : Void
-    fun av_xiphlacing(LibC::Char*, LibC::UInt) : LibC::UInt
-    fun av_log_missing_feature(Void*, LibC::Char*, LibC::Int) : Void
-    fun av_log_ask_for_sample(Void*, LibC::Char*) : Void
-    fun av_register_hwaccel(AVHWAccel*) : Void
-    fun av_hwaccel_next(AVHWAccel*) : AVHWAccel*
+    fun bsf_list_alloc = av_bsf_list_alloc : AVBSFList*
+    fun bsf_list_free = av_bsf_list_free(AVBSFList**) : Void
+    fun bsf_list_append = av_bsf_list_append(AVBSFList*, AVBSFContext*) : LibC::Int
+    fun bsf_list_append2 = av_bsf_list_append2(AVBSFList*, LibC::Char*, AVDictionary**) : LibC::Int
+    fun bsf_list_finalize = av_bsf_list_finalize(AVBSFList**, AVBSFContext**) : LibC::Int
+    fun bsf_list_parse_str = av_bsf_list_parse_str(LibC::Char*, AVBSFContext**) : LibC::Int
+    fun bsf_get_null_filter = av_bsf_get_null_filter(AVBSFContext**) : LibC::Int
+    fun fast_padded_malloc = av_fast_padded_malloc(Void*, LibC::UInt*, SizeT) : Void
+    fun fast_padded_mallocz = av_fast_padded_mallocz(Void*, LibC::UInt*, SizeT) : Void
+    fun xiphlacing = av_xiphlacing(LibC::Char*, LibC::UInt) : LibC::UInt
+    fun log_missing_feature = av_log_missing_feature(Void*, LibC::Char*, LibC::Int) : Void
+    fun log_ask_for_sample = av_log_ask_for_sample(Void*, LibC::Char*) : Void
+    fun register_hwaccel = av_register_hwaccel(AVHWAccel*) : Void
+    fun hwaccel_next = av_hwaccel_next(AVHWAccel*) : AVHWAccel*
     enum AVLockOp : LibC::UInt
       CREATE  = 0
       OBTAIN  = 1
       RELEASE = 2
       DESTROY = 3
     end
-    fun av_lockmgr_register((Void**, AVLockOp) -> LibC::Int*) : LibC::Int
-    fun avcodec_get_type(AVCodecID) : AVMediaType
-    fun avcodec_get_name(AVCodecID) : LibC::Char*
-    fun avcodec_is_open(AVCodecContext*) : LibC::Int
-    fun av_codec_is_encoder(AVCodec*) : LibC::Int
-    fun av_codec_is_decoder(AVCodec*) : LibC::Int
-    fun avcodec_descriptor_get(AVCodecID) : AVCodecDescriptor*
-    fun avcodec_descriptor_next(AVCodecDescriptor*) : AVCodecDescriptor*
-    fun avcodec_descriptor_get_by_name(LibC::Char*) : AVCodecDescriptor*
-    fun av_cpb_properties_alloc(SizeT*) : AVCPBProperties*
+    fun lockmgr_register = av_lockmgr_register((Void**, AVLockOp) -> LibC::Int*) : LibC::Int
+    fun get_type = av_codec_get_type(AVCodecID) : AVMediaType
+    fun get_name = av_codec_get_name(AVCodecID) : LibC::Char*
+    fun is_open = av_codec_is_open(AVCodecContext*) : LibC::Int
+    fun codec_is_encoder = av_codec_is_encoder(AVCodec*) : LibC::Int
+    fun codec_is_decoder = av_codec_is_decoder(AVCodec*) : LibC::Int
+    fun descriptor_get = av_codec_descriptor_get(AVCodecID) : AVCodecDescriptor*
+    fun descriptor_next = av_codec_descriptor_next(AVCodecDescriptor*) : AVCodecDescriptor*
+    fun descriptor_get_by_name = av_codec_descriptor_get_by_name(LibC::Char*) : AVCodecDescriptor*
+    fun cpb_properties_alloc = av_cpb_properties_alloc(SizeT*) : AVCPBProperties*
   end
 end

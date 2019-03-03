@@ -12,16 +12,16 @@ module AV
     AVFILTER_THREAD_SLICE                   = 1 << 0
     AVFILTER_CMD_FLAG_ONE                   = 1
     AVFILTER_CMD_FLAG_FAST                  = 2
-    fun avfilter_version : LibC::UInt
-    fun avfilter_configuration : LibC::Char*
-    fun avfilter_license : LibC::Char*
+    fun version = avfilter_version : LibC::UInt
+    fun configuration = avfilter_configuration : LibC::Char*
+    fun license = avfilter_license : LibC::Char*
     # type AVFilterContext = Void
     # type AVFilterLink = Void
     type AVFilterPad = Void
     type AVFilterFormats = Void
-    fun avfilter_pad_count(AVFilterPad*) : LibC::Int
-    fun avfilter_pad_get_name(AVFilterPad*, LibC::Int) : LibC::Char*
-    fun avfilter_pad_get_type(AVFilterPad*, LibC::Int) : AVMediaType
+    fun pad_count = avfilter_pad_count(AVFilterPad*) : LibC::Int
+    fun pad_get_name = avfilter_pad_get_name(AVFilterPad*, LibC::Int) : LibC::Char*
+    fun pad_get_type = avfilter_pad_get_type(AVFilterPad*, LibC::Int) : AVMediaType
 
     struct AVFilter
       name : LibC::Char*
@@ -115,25 +115,25 @@ module AV
       reserved : StaticArray(LibC::Char, 61440)
     end
 
-    fun avfilter_link(AVFilterContext*, LibC::UInt, AVFilterContext*, LibC::UInt) : LibC::Int
-    fun avfilter_link_free(AVFilterLink**) : Void
-    fun avfilter_link_get_channels(AVFilterLink*) : LibC::Int
-    fun avfilter_link_set_closed(AVFilterLink*, LibC::Int) : Void
-    fun avfilter_config_links(AVFilterContext*) : LibC::Int
-    fun avfilter_process_command(AVFilterContext*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int, LibC::Int) : LibC::Int
-    fun avfilter_register_all : Void
-    fun avfilter_uninit : Void
-    fun avfilter_register(AVFilter*) : LibC::Int
-    fun avfilter_get_by_name(LibC::Char*) : AVFilter*
-    fun avfilter_next(AVFilter*) : AVFilter*
-    fun av_filter_next(AVFilter**) : AVFilter**
-    fun avfilter_open(AVFilterContext**, AVFilter*, LibC::Char*) : LibC::Int
-    fun avfilter_init_filter(AVFilterContext*, LibC::Char*, Void*) : LibC::Int
-    fun avfilter_init_str(AVFilterContext*, LibC::Char*) : LibC::Int
-    fun avfilter_init_dict(AVFilterContext*, AVDictionary**) : LibC::Int
-    fun avfilter_free(AVFilterContext*) : Void
-    fun avfilter_insert_filter(AVFilterLink*, AVFilterContext*, LibC::UInt, LibC::UInt) : LibC::Int
-    fun avfilter_get_class : AVClass*
+    fun link = avfilter_link(AVFilterContext*, LibC::UInt, AVFilterContext*, LibC::UInt) : LibC::Int
+    fun link_free = avfilter_link_free(AVFilterLink**) : Void
+    fun link_get_channels = avfilter_link_get_channels(AVFilterLink*) : LibC::Int
+    fun link_set_closed = avfilter_link_set_closed(AVFilterLink*, LibC::Int) : Void
+    fun config_links = avfilter_config_links(AVFilterContext*) : LibC::Int
+    fun process_command = avfilter_process_command(AVFilterContext*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int, LibC::Int) : LibC::Int
+    fun register_all = avfilter_register_all : Void
+    fun uninit = avfilter_uninit : Void
+    fun register = avfilter_register(AVFilter*) : LibC::Int
+    fun get_by_name = avfilter_get_by_name(LibC::Char*) : AVFilter*
+    fun next = avfilter_next(AVFilter*) : AVFilter*
+    fun next_filter = av_filter_next(AVFilter**) : AVFilter**
+    fun open = avfilter_open(AVFilterContext**, AVFilter*, LibC::Char*) : LibC::Int
+    fun init_filter = avfilter_init_filter(AVFilterContext*, LibC::Char*, Void*) : LibC::Int
+    fun init_str = avfilter_init_str(AVFilterContext*, LibC::Char*) : LibC::Int
+    fun init_dict = avfilter_init_dict(AVFilterContext*, AVDictionary**) : LibC::Int
+    fun free = avfilter_free(AVFilterContext*) : Void
+    fun insert_filter = avfilter_insert_filter(AVFilterLink*, AVFilterContext*, LibC::UInt, LibC::UInt) : LibC::Int
+    fun get_class = avfilter_get_class : AVClass*
     type AVFilterGraphInternal = Void
     alias AvfilterActionFunc = (AVFilterContext*, Void*, LibC::Int, LibC::Int) -> Void
     alias AvfilterExecuteFunc = (AVFilterContext*, AvfilterActionFunc*, Void*, LibC::Int*, LibC::Int) -> Void
@@ -155,14 +155,14 @@ module AV
       disable_auto_convert : LibC::UInt
     end
 
-    fun avfilter_graph_alloc : AVFilterGraph*
-    fun avfilter_graph_alloc_filter(AVFilterGraph*, AVFilter*, LibC::Char*) : AVFilterContext*
-    fun avfilter_graph_get_filter(AVFilterGraph*, LibC::Char*) : AVFilterContext*
-    fun avfilter_graph_add_filter(AVFilterGraph*, AVFilterContext*) : LibC::Int
-    fun avfilter_graph_create_filter(AVFilterContext**, AVFilter*, LibC::Char*, LibC::Char*, Void*, AVFilterGraph*) : LibC::Int
-    fun avfilter_graph_set_auto_convert(AVFilterGraph*, LibC::UInt) : Void
-    fun avfilter_graph_config(AVFilterGraph*, Void*) : LibC::Int
-    fun avfilter_graph_free(AVFilterGraph**) : Void
+    fun graph_alloc = avfilter_graph_alloc : AVFilterGraph*
+    fun graph_alloc_filter = avfilter_graph_alloc_filter(AVFilterGraph*, AVFilter*, LibC::Char*) : AVFilterContext*
+    fun graph_get_filter = avfilter_graph_get_filter(AVFilterGraph*, LibC::Char*) : AVFilterContext*
+    fun graph_add_filter = avfilter_graph_add_filter(AVFilterGraph*, AVFilterContext*) : LibC::Int
+    fun graph_create_filter = avfilter_graph_create_filter(AVFilterContext**, AVFilter*, LibC::Char*, LibC::Char*, Void*, AVFilterGraph*) : LibC::Int
+    fun graph_set_auto_convert = avfilter_graph_set_auto_convert(AVFilterGraph*, LibC::UInt) : Void
+    fun graph_config = avfilter_graph_config(AVFilterGraph*, Void*) : LibC::Int
+    fun graph_free = avfilter_graph_free(AVFilterGraph**) : Void
 
     struct AVFilterInOut
       name : LibC::Char*
@@ -171,14 +171,14 @@ module AV
       next : AVFilterInOut*
     end
 
-    fun avfilter_inout_alloc : AVFilterInOut*
-    fun avfilter_inout_free(AVFilterInOut**) : Void
-    fun avfilter_graph_parse(AVFilterGraph*, LibC::Char*, AVFilterInOut*, AVFilterInOut*, Void*) : LibC::Int
-    fun avfilter_graph_parse_ptr(AVFilterGraph*, LibC::Char*, AVFilterInOut**, AVFilterInOut**, Void*) : LibC::Int
-    fun avfilter_graph_parse2(AVFilterGraph*, LibC::Char*, AVFilterInOut**, AVFilterInOut**) : LibC::Int
-    fun avfilter_graph_send_command(AVFilterGraph*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int, LibC::Int) : LibC::Int
-    fun avfilter_graph_queue_command(AVFilterGraph*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int, LibC::Double) : LibC::Int
-    fun avfilter_graph_dump(AVFilterGraph*, LibC::Char*) : LibC::Char*
-    fun avfilter_graph_request_oldest(AVFilterGraph*) : LibC::Int
+    fun inout_alloc = avfilter_inout_alloc : AVFilterInOut*
+    fun inout_free = avfilter_inout_free(AVFilterInOut**) : Void
+    fun graph_parse = avfilter_graph_parse(AVFilterGraph*, LibC::Char*, AVFilterInOut*, AVFilterInOut*, Void*) : LibC::Int
+    fun graph_parse_ptr = avfilter_graph_parse_ptr(AVFilterGraph*, LibC::Char*, AVFilterInOut**, AVFilterInOut**, Void*) : LibC::Int
+    fun graph_parse2 = avfilter_graph_parse2(AVFilterGraph*, LibC::Char*, AVFilterInOut**, AVFilterInOut**) : LibC::Int
+    fun graph_send_command = avfilter_graph_send_command(AVFilterGraph*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int, LibC::Int) : LibC::Int
+    fun graph_queue_command = avfilter_graph_queue_command(AVFilterGraph*, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int, LibC::Double) : LibC::Int
+    fun graph_dump = avfilter_graph_dump(AVFilterGraph*, LibC::Char*) : LibC::Char*
+    fun graph_request_oldest = avfilter_graph_request_oldest(AVFilterGraph*) : LibC::Int
   end
 end
