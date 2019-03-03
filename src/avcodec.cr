@@ -1,6 +1,8 @@
-# TODO: Write documentation for `Avcodec`
+require "./bindings/libavcodec"
+require "./bindings/libavfilter"
+require "./bindings/libavformat"
+require "./bindings/libavresample"
+
 module Avcodec
   VERSION = "0.1.0"
-
-  # TODO: Put your code here
 end

@@ -1,4 +1,6 @@
+require "./extra_types/libavcodec"
 module AV
+  @[Link("avcodec")]
   lib LibAVCodec
     #   AVCODEC_AVCODEC_H =
     IFF_BYTERUN1 = IFF_ILBM
@@ -34,9 +36,9 @@ module AV
       BITEXACT       = 1 << 23
       AC_PRED        = 1 << 24
       INTERLACED_ME  = 1 << 29
-      CLOSED_GOP     = UInt.new(1) << 31
+      CLOSED_GOP     = 1_u32 << 31
     end
-    enum AVCodecFlag
+    enum AVCodecFlag2
       FAST                = 1 << 0
       NO_OUTPUT           = 1 << 2
       LOCAL_HEADER        = 1 << 3
@@ -48,7 +50,7 @@ module AV
       SKIP_MANUAL         = 1 << 29
       RO_FLUSH_NOOP       = 1 << 30
     end
-    enum AVCodecCap
+    enum AVCodecCap : UInt64
       DRAW_HORIZ_BAND     = 1 << 0
       DR1                 = 1 << 1
       TRUNCATED           = 1 << 3
@@ -65,7 +67,7 @@ module AV
       VARIABLE_FRAME_SIZE = 1 << 16
       AVOID_PROBING       = 1 << 17
       INTRA_ONLY          = 0x40000000
-      LOSSLESS            = 0x80000000
+      LOSSLESS            = 0x80000000_i64
     end
     enum CodecFlag
       UNALIGNED       = AVCodecFlag::UNALIGNED
@@ -103,7 +105,7 @@ module AV
       EXPORT_MVS          = AVCodecFlag2::EXPORT_MVS
       SKIP_MANUAL         = AVCodecFlag2::SKIP_MANUAL
     end
-    enum CodecCap
+    enum CodecCap : Int64
       DRAW_HORIZ_BAND     = AVCodecCap::DRAW_HORIZ_BAND
       DR1                 = AVCodecCap::DR1
       TRUNCATED           = AVCodecCap::TRUNCATED
@@ -142,9 +144,9 @@ module AV
       T_P1L0
       T_P0L1
       T_P1L1
-      T_L0         = MB_TYPE_P0L0 | MB_TYPE_P1L0
-      T_L1         = MB_TYPE_P0L1 | MB_TYPE_P1L1
-      T_L0L1       = MB_TYPE_L0 | MB_TYPE_L1
+      T_L0         = T_P0L0 | T_P1L0
+      T_L1         = T_P0L1 | T_P1L1
+      T_L0L1       = T_L0 | T_L1
       T_QUANT      = 0x00010000
       T_CBP        = 0x00020000
     end
@@ -887,7 +889,7 @@ module AV
       id : LibC::Int
       width : LibC::Int
       height : LibC::Int
-      position : StaticArray(StaticArray(Int16T, 2), 3)
+      position : StaticArray(StaticArray(Int16, 2), 3)
     end
 
     struct AVCPBProperties
@@ -934,17 +936,17 @@ module AV
 
     struct AVPacket
       buf : AVBufferRef*
-      pts : Int64T
-      dts : Int64T
+      pts : Int64
+      dts : Int64
       data : UInt8*
       size : LibC::Int
       stream_index : LibC::Int
       flags : LibC::Int
       side_data : AVPacketSideData*
       side_data_elems : LibC::Int
-      duration : Int64T
-      pos : Int64T
-      convergence_duration : Int64T
+      duration : Int64
+      pos : Int64
+      convergence_duration : Int64
     end
 
     enum AVSideDataParamChangeFlags : LibC::UInt
@@ -978,7 +980,7 @@ module AV
       priv_data : Void*
       internal : AVCodecInternal*
       opaque : Void*
-      bit_rate : Int64T
+      bit_rate : Int64
       bit_rate_tolerance : LibC::Int
       global_quality : LibC::Int
       compression_level : LibC::Int
@@ -1086,8 +1088,8 @@ module AV
       rc_override_count : LibC::Int
       rc_override : RcOverride*
       rc_eq : LibC::Char*
-      rc_max_rate : Int64T
-      rc_min_rate : Int64T
+      rc_max_rate : Int64
+      rc_min_rate : Int64
       rc_buffer_aggressivity : LibC::Float
       rc_initial_cplx : LibC::Float
       rc_max_available_vbv_use : LibC::Float
@@ -1104,7 +1106,7 @@ module AV
       trellis : LibC::Int
       min_prediction_order : LibC::Int
       max_prediction_order : LibC::Int
-      timecode_frame_start : Int64T
+      timecode_frame_start : Int64
       rtp_callback : (AVCodecContext*, Void*, LibC::Int, LibC::Int) -> Void*
       rtp_payload_size : LibC::Int
       mv_bits : LibC::Int
@@ -1124,7 +1126,7 @@ module AV
       debug : LibC::Int
       debug_mv : LibC::Int
       err_recognition : LibC::Int
-      reordered_opaque : Int64T
+      reordered_opaque : Int64
       hwaccel : AVHWAccel*
       hwaccel_context : Void*
       error : StaticArray(UInt64, 8)
@@ -1156,10 +1158,10 @@ module AV
       sw_pix_fmt : AVPixelFormat
       pkt_timebase : AVRational
       codec_descriptor : AVCodecDescriptor*
-      pts_correction_num_faulty_pts : Int64T
-      pts_correction_num_faulty_dts : Int64T
-      pts_correction_last_pts : Int64T
-      pts_correction_last_dts : Int64T
+      pts_correction_num_faulty_pts : Int64
+      pts_correction_num_faulty_dts : Int64
+      pts_correction_last_pts : Int64
+      pts_correction_last_dts : Int64
       sub_charenc : LibC::Char*
       sub_charenc_mode : LibC::Int
       skip_alpha : LibC::Int
@@ -1173,7 +1175,7 @@ module AV
       hw_frames_ctx : AVBufferRef*
       sub_text_format : LibC::Int
       trailing_padding : LibC::Int
-      max_pixels : Int64T
+      max_pixels : Int64
       hw_device_ctx : AVBufferRef*
       hwaccel_flags : LibC::Int
       apply_cropping : LibC::Int
@@ -1197,7 +1199,7 @@ module AV
     end
 
     type AVCodecDefault = Void
-    type AVSubtitle = Void
+    # type AVSubtitle = Void
 
     struct AVCodec
       name : LibC::Char*
@@ -1209,7 +1211,7 @@ module AV
       pix_fmts : AVPixelFormat*
       supported_samplerates : LibC::Int*
       sample_fmts : AVSampleFormat*
-      channel_layouts : Uint64T*
+      channel_layouts : UInt64*
       max_lowres : UInt8
       priv_class : AVClass*
       profiles : AVProfile*
@@ -1287,7 +1289,7 @@ module AV
       end_display_time : UInt32
       num_rects : LibC::UInt
       rects : AVSubtitleRect**
-      pts : Int64T
+      pts : Int64
     end
 
     struct AVCodecParameters
@@ -1297,7 +1299,7 @@ module AV
       extradata : UInt8*
       extradata_size : LibC::Int
       format : LibC::Int
-      bit_rate : Int64T
+      bit_rate : Int64
       bits_per_coded_sample : LibC::Int
       bits_per_raw_sample : LibC::Int
       profile : LibC::Int
@@ -1363,7 +1365,7 @@ module AV
     fun av_packet_split_side_data(AVPacket*) : LibC::Int
     fun av_packet_side_data_name(AVPacketSideDataType) : LibC::Char*
     fun av_packet_pack_dictionary(AVDictionary*, LibC::Int*) : UInt8*
-    fun av_packet_unpack_dictionary(Uint8T*, LibC::Int, AVDictionary**) : LibC::Int
+    fun av_packet_unpack_dictionary(UInt8*, LibC::Int, AVDictionary**) : LibC::Int
     fun av_packet_free_side_data(AVPacket*) : Void
     fun av_packet_ref(AVPacket*, AVPacket*) : LibC::Int
     fun av_packet_unref(AVPacket*) : Void
@@ -1395,31 +1397,31 @@ module AV
     struct AVCodecParserContext
       priv_data : Void*
       parser : AVCodecParser*
-      frame_offset : Int64T
-      cur_offset : Int64T
-      next_frame_offset : Int64T
+      frame_offset : Int64
+      cur_offset : Int64
+      next_frame_offset : Int64
       pict_type : LibC::Int
       repeat_pict : LibC::Int
-      pts : Int64T
-      dts : Int64T
-      last_pts : Int64T
-      last_dts : Int64T
+      pts : Int64
+      dts : Int64
+      last_pts : Int64
+      last_dts : Int64
       fetch_timestamp : LibC::Int
       cur_frame_start_index : LibC::Int
-      cur_frame_offset : StaticArray(Int64T, 4)
-      cur_frame_pts : StaticArray(Int64T, 4)
-      cur_frame_dts : StaticArray(Int64T, 4)
+      cur_frame_offset : StaticArray(Int64, 4)
+      cur_frame_pts : StaticArray(Int64, 4)
+      cur_frame_dts : StaticArray(Int64, 4)
       flags : LibC::Int
-      offset : Int64T
-      cur_frame_end : StaticArray(Int64T, 4)
+      offset : Int64
+      cur_frame_end : StaticArray(Int64, 4)
       key_frame : LibC::Int
-      convergence_duration : Int64T
+      convergence_duration : Int64
       dts_sync_point : LibC::Int
       dts_ref_dts_delta : LibC::Int
       pts_dts_delta : LibC::Int
-      cur_frame_pos : StaticArray(Int64T, 4)
-      pos : Int64T
-      last_pos : Int64T
+      cur_frame_pos : StaticArray(Int64, 4)
+      pos : Int64
+      last_pos : Int64
       duration : LibC::Int
       field_order : AVFieldOrder
       picture_structure : AVPictureStructure
@@ -1444,8 +1446,8 @@ module AV
     fun av_parser_next(AVCodecParser*) : AVCodecParser*
     fun av_register_codec_parser(AVCodecParser*) : Void
     fun av_parser_init(LibC::Int) : AVCodecParserContext*
-    fun av_parser_parse2(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, Uint8T*, LibC::Int, Int64T, Int64T, Int64T) : LibC::Int
-    fun av_parser_change(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
+    fun av_parser_parse2(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, Int64, Int64, Int64) : LibC::Int
+    fun av_parser_change(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
     fun av_parser_close(AVCodecParserContext*) : Void
     fun avcodec_find_encoder(AVCodecID) : AVCodec*
     fun avcodec_find_encoder_by_name(LibC::Char*) : AVCodec*
@@ -1463,7 +1465,7 @@ module AV
     fun av_resample_close(AVResampleContext*) : Void
     fun avpicture_alloc(AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
     fun avpicture_free(AVPicture*) : Void
-    fun avpicture_fill(AVPicture*, Uint8T*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
+    fun avpicture_fill(AVPicture*, UInt8*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
     fun avpicture_layout(AVPicture*, AVPixelFormat, LibC::Int, LibC::Int, LibC::Char*, LibC::Int) : LibC::Int
     fun avpicture_get_size(AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
     fun av_picture_copy(AVPicture*, AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : Void
@@ -1483,7 +1485,7 @@ module AV
     fun avcodec_profile_name(AVCodecID, LibC::Int) : LibC::Char*
     fun avcodec_default_execute(AVCodecContext*, AVCodecContextExecuteProc, Void*, LibC::Int*, LibC::Int, LibC::Int) : LibC::Int
     fun avcodec_default_execute2(AVCodecContext*, AVCodecContextExecute2Proc, Void*, LibC::Int*, LibC::Int) : LibC::Int
-    fun avcodec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
+    fun avcodec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, UInt8*, LibC::Int, LibC::Int) : LibC::Int
     fun avcodec_flush_buffers(AVCodecContext*) : Void
     fun av_get_bits_per_sample(AVCodecID) : LibC::Int
     fun av_get_pcm_codec(AVSampleFormat, LibC::Int) : AVCodecID
@@ -1524,7 +1526,7 @@ module AV
 
     fun av_register_bitstream_filter(AVBitStreamFilter*) : Void
     fun av_bitstream_filter_init(LibC::Char*) : AVBitStreamFilterContext*
-    fun av_bitstream_filter_filter(AVBitStreamFilterContext*, AVCodecContext*, LibC::Char*, UInt8**, LibC::Int*, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
+    fun av_bitstream_filter_filter(AVBitStreamFilterContext*, AVCodecContext*, LibC::Char*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
     fun av_bitstream_filter_close(AVBitStreamFilterContext*) : Void
     fun av_bitstream_filter_next(AVBitStreamFilter*) : AVBitStreamFilter*
     fun av_bsf_get_by_name(LibC::Char*) : AVBitStreamFilter*

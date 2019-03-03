@@ -2352,18 +2352,18 @@ module AV
   alias UShort = LibC::Short
   alias UInt = LibC::UInt
   alias ULong = LibC::ULong
-  alias Int8T = LibC::Char
-  alias Uint8T = LibC::Char
-  alias Int16T = LibC::Short
-  alias Uint16T = LibC::Short
-  alias Int32T = LibC::Int
-  alias Uint32T = LibC::UInt
-  alias Int64T = LibC::Long
-  alias Uint64T = LibC::ULong
+  alias Int8 = LibC::Char
+  alias UInt8 = LibC::Char
+  alias Int16 = LibC::Short
+  alias UInt16 = LibC::Short
+  alias Int32 = LibC::Int
+  alias UInt32 = LibC::UInt
+  alias Int64 = LibC::Long
+  alias UInt64 = LibC::ULong
   alias QuadT = LibC::Long
   alias UQuadT = LibC::ULong
   alias IntmaxT = LibC::Long
-  alias UintmaxT = LibC::ULong
+  alias UIntmaxT = LibC::ULong
   alias DevT = LibC::ULong
   alias UidT = LibC::UInt
   alias GidT = LibC::UInt
@@ -2405,10 +2405,10 @@ module AV
   alias IntptrT = LibC::Long
   alias SocklenT = LibC::UInt
   alias SigAtomicT = LibC::Int
-  alias Int8T = LibC::Char
-  alias Int16T = LibC::Short
-  alias Int32T = LibC::Int
-  alias Int64T = LibC::Long
+  alias Int8 = LibC::Char
+  alias Int16 = LibC::Short
+  alias Int32 = LibC::Int
+  alias Int64 = LibC::Long
   alias UInt8 = LibC::Char
   alias UInt16 = LibC::Short
   alias UInt32 = LibC::UInt
@@ -2417,22 +2417,22 @@ module AV
   alias IntLeast16T = LibC::Short
   alias IntLeast32T = LibC::Int
   alias IntLeast64T = LibC::Long
-  alias UintLeast8T = LibC::Char
-  alias UintLeast16T = LibC::Short
-  alias UintLeast32T = LibC::UInt
-  alias UintLeast64T = LibC::ULong
+  alias UIntLeast8T = LibC::Char
+  alias UIntLeast16T = LibC::Short
+  alias UIntLeast32T = LibC::UInt
+  alias UIntLeast64T = LibC::ULong
   alias IntFast8T = LibC::Char
   alias IntFast16T = LibC::Long
   alias IntFast32T = LibC::Long
   alias IntFast64T = LibC::Long
-  alias UintFast8T = LibC::Char
-  alias UintFast16T = LibC::ULong
-  alias UintFast32T = LibC::ULong
-  alias UintFast64T = LibC::ULong
+  alias UIntFast8T = LibC::Char
+  alias UIntFast16T = LibC::ULong
+  alias UIntFast32T = LibC::ULong
+  alias UIntFast64T = LibC::ULong
   alias IntptrT = LibC::Long
-  alias UintptrT = LibC::ULong
+  alias UIntptrT = LibC::ULong
   alias IntmaxT = LibC::Long
-  alias UintmaxT = LibC::ULong
+  alias UIntmaxT = LibC::ULong
   fun avutil_version() : LibC::UInt
   fun av_version_info() : LibC::Char*
   fun avutil_configuration() : LibC::Char*
@@ -2467,9 +2467,9 @@ module AV
   fun imaxabs(IntmaxT) : IntmaxT
   fun imaxdiv(IntmaxT, IntmaxT) : ImaxdivT
   fun strtoimax(LibC::Char*, LibC::Char**, LibC::Int) : IntmaxT
-  fun strtoumax(LibC::Char*, LibC::Char**, LibC::Int) : UintmaxT
+  fun strtoumax(LibC::Char*, LibC::Char**, LibC::Int) : UIntmaxT
   fun wcstoimax(GwcharT*, LibC::Int**, LibC::Int) : IntmaxT
-  fun wcstoumax(GwcharT*, LibC::Int**, LibC::Int) : UintmaxT
+  fun wcstoumax(GwcharT*, LibC::Int**, LibC::Int) : UIntmaxT
   alias Float32 = LibC::Float
   alias Float64 = LibC::Double
   alias Float32x = LibC::Double
@@ -3161,11 +3161,11 @@ module AV
   alias TimerT = Void*
   alias Ulong = LibC::ULong
   alias Ushort = LibC::Short
-  alias Uint = LibC::UInt
-  alias UInt8T = LibC::Char
-  alias UInt16T = LibC::Short
-  alias UInt32T = LibC::UInt
-  alias UInt64T = LibC::ULong
+  alias UInt = LibC::UInt
+  alias UInt8 = LibC::Char
+  alias UInt16 = LibC::Short
+  alias UInt32 = LibC::UInt
+  alias UInt64 = LibC::ULong
   alias RegisterT = LibC::Long
   fun __uint16_identity(LibC::Short) : LibC::Short
   fun __uint32_identity(LibC::UInt) : LibC::UInt
@@ -3294,16 +3294,16 @@ module AV
   fun initstate(LibC::UInt, LibC::Char*, SizeT) : LibC::Char*
   fun setstate(LibC::Char*) : LibC::Char*
   struct RandomData
-    fptr : Int32T*
-    rptr : Int32T*
-    state : Int32T*
+    fptr : Int32*
+    rptr : Int32*
+    state : Int32*
     rand_type : LibC::Int
     rand_deg : LibC::Int
     rand_sep : LibC::Int
-    end_ptr : Int32T*
+    end_ptr : Int32*
   end
 
-  fun random_r(RandomData*, Int32T*) : LibC::Int
+  fun random_r(RandomData*, Int32*) : LibC::Int
   fun srandom_r(LibC::UInt, RandomData*) : LibC::Int
   fun initstate_r(LibC::UInt, LibC::Char*, SizeT, RandomData*) : LibC::Int
   fun setstate_r(LibC::Char*, RandomData*) : LibC::Int
@@ -3453,12 +3453,12 @@ module AV
   fun av_log2(LibC::UInt) : LibC::Int
   fun av_log2_16bit(LibC::UInt) : LibC::Int
   fun av_clip_c(LibC::Int, LibC::Int, LibC::Int) : LibC::Int
-  fun av_clip64_c(Int64T, Int64T, Int64T) : Int64T
+  fun av_clip64_c(Int64, Int64, Int64) : Int64
   fun av_clip_uint8_c(LibC::Int) : UInt8
-  fun av_clip_int8_c(LibC::Int) : Int8T
+  fun av_clip_int8_c(LibC::Int) : Int8
   fun av_clip_uint16_c(LibC::Int) : UInt16
-  fun av_clip_int16_c(LibC::Int) : Int16T
-  fun av_clipl_int32_c(Int64T) : Int32T
+  fun av_clip_int16_c(LibC::Int) : Int16
+  fun av_clipl_int32_c(Int64) : Int32
   fun av_clip_intp2_c(LibC::Int, LibC::Int) : LibC::Int
   fun av_clip_uintp2_c(LibC::Int, LibC::Int) : LibC::UInt
   fun av_mod_uintp2_c(LibC::UInt, LibC::UInt) : LibC::UInt
@@ -3499,7 +3499,7 @@ module AV
   fun av_memcpy_backptr(UInt8*, LibC::Int, LibC::Int) : Void
   fun av_dynarray_add(Void*, LibC::Int*, Void*) : Void
   fun av_dynarray_add_nofree(Void*, LibC::Int*, Void*) : LibC::Int
-  fun av_dynarray2_add(Void**, LibC::Int*, SizeT, Uint8T*) : Void*
+  fun av_dynarray2_add(Void**, LibC::Int*, SizeT, UInt8*) : Void*
   fun av_size_mult(SizeT, SizeT, SizeT*) : LibC::Int
   fun av_max_alloc(SizeT) : Void
   struct AVRational
@@ -3510,7 +3510,7 @@ module AV
   fun av_make_q(LibC::Int, LibC::Int) : AVRational
   fun av_cmp_q(AVRational, AVRational) : LibC::Int
   fun av_q2d(AVRational) : LibC::Double
-  fun av_reduce(LibC::Int*, LibC::Int*, Int64T, Int64T, Int64T) : LibC::Int
+  fun av_reduce(LibC::Int*, LibC::Int*, Int64, Int64, Int64) : LibC::Int
   fun av_mul_q(AVRational, AVRational) : AVRational
   fun av_div_q(AVRational, AVRational) : AVRational
   fun av_add_q(AVRational, AVRational) : AVRational
@@ -3532,15 +3532,15 @@ module AV
     AV_ROUND_NEAR_INF = 5
     AV_ROUND_PASS_MINMAX = 8192
   end
-  fun av_gcd(Int64T, Int64T) : Int64T
-  fun av_rescale(Int64T, Int64T, Int64T) : Int64T
-  fun av_rescale_rnd(Int64T, Int64T, Int64T, AVRounding) : Int64T
-  fun av_rescale_q(Int64T, AVRational, AVRational) : Int64T
-  fun av_rescale_q_rnd(Int64T, AVRational, AVRational, AVRounding) : Int64T
-  fun av_compare_ts(Int64T, AVRational, Int64T, AVRational) : LibC::Int
-  fun av_compare_mod(UInt64, UInt64, UInt64) : Int64T
-  fun av_rescale_delta(AVRational, Int64T, AVRational, LibC::Int, Int64T*, AVRational) : Int64T
-  fun av_add_stable(AVRational, Int64T, AVRational, Int64T) : Int64T
+  fun av_gcd(Int64, Int64) : Int64
+  fun av_rescale(Int64, Int64, Int64) : Int64
+  fun av_rescale_rnd(Int64, Int64, Int64, AVRounding) : Int64
+  fun av_rescale_q(Int64, AVRational, AVRational) : Int64
+  fun av_rescale_q_rnd(Int64, AVRational, AVRational, AVRounding) : Int64
+  fun av_compare_ts(Int64, AVRational, Int64, AVRational) : LibC::Int
+  fun av_compare_mod(UInt64, UInt64, UInt64) : Int64
+  fun av_rescale_delta(AVRational, Int64, AVRational, LibC::Int, Int64*, AVRational) : Int64
+  fun av_add_stable(AVRational, Int64, AVRational, Int64) : Int64
   enum AVClassCategory : LibC::UInt
     AV_CLASS_CATEGORY_NA = 0
     AV_CLASS_CATEGORY_INPUT = 1
@@ -3895,7 +3895,7 @@ module AV
   fun av_get_bytes_per_sample(AVSampleFormat) : LibC::Int
   fun av_sample_fmt_is_planar(AVSampleFormat) : LibC::Int
   fun av_samples_get_buffer_size(LibC::Int*, LibC::Int, LibC::Int, AVSampleFormat, LibC::Int) : LibC::Int
-  fun av_samples_fill_arrays(UInt8**, LibC::Int*, Uint8T*, LibC::Int, LibC::Int, AVSampleFormat, LibC::Int) : LibC::Int
+  fun av_samples_fill_arrays(UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int, AVSampleFormat, LibC::Int) : LibC::Int
   fun av_samples_alloc(UInt8**, LibC::Int*, LibC::Int, LibC::Int, AVSampleFormat, LibC::Int) : LibC::Int
   fun av_samples_alloc_array_and_samples(UInt8***, LibC::Int*, LibC::Int, LibC::Int, AVSampleFormat, LibC::Int) : LibC::Int
   fun av_samples_copy(UInt8**, UInt8**, LibC::Int, LibC::Int, LibC::Int, LibC::Int, AVSampleFormat) : LibC::Int
@@ -3946,7 +3946,7 @@ module AV
   type AVBPrint = Void
   fun av_bprint_channel_layout(AVBPrint*, LibC::Int, UInt64) : Void
   fun av_get_channel_layout_nb_channels(UInt64) : LibC::Int
-  fun av_get_default_channel_layout(LibC::Int) : Int64T
+  fun av_get_default_channel_layout(LibC::Int) : Int64
   fun av_get_channel_layout_channel_index(UInt64, UInt64) : LibC::Int
   fun av_channel_layout_extract_channel(UInt64, LibC::Int) : UInt64
   fun av_get_channel_name(UInt64) : LibC::Char*
@@ -3961,7 +3961,7 @@ module AV
   fun av_dict_get(AVDictionary*, LibC::Char*, AVDictionaryEntry*, LibC::Int) : AVDictionaryEntry*
   fun av_dict_count(AVDictionary*) : LibC::Int
   fun av_dict_set(AVDictionary**, LibC::Char*, LibC::Char*, LibC::Int) : LibC::Int
-  fun av_dict_set_int(AVDictionary**, LibC::Char*, Int64T, LibC::Int) : LibC::Int
+  fun av_dict_set_int(AVDictionary**, LibC::Char*, Int64, LibC::Int) : LibC::Int
   fun av_dict_parse_string(AVDictionary**, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int) : LibC::Int
   fun av_dict_copy(AVDictionary**, AVDictionary*, LibC::Int) : LibC::Int
   fun av_dict_free(AVDictionary**) : Void
@@ -4012,9 +4012,9 @@ module AV
     key_frame : LibC::Int
     pict_type : AVPictureType
     sample_aspect_ratio : AVRational
-    pts : Int64T
-    pkt_pts : Int64T
-    pkt_dts : Int64T
+    pts : Int64
+    pkt_pts : Int64
+    pkt_dts : Int64
     coded_picture_number : LibC::Int
     display_picture_number : LibC::Int
     quality : LibC::Int
@@ -4024,7 +4024,7 @@ module AV
     interlaced_frame : LibC::Int
     top_field_first : LibC::Int
     palette_has_changed : LibC::Int
-    reordered_opaque : Int64T
+    reordered_opaque : Int64
     sample_rate : LibC::Int
     channel_layout : UInt64
     buf : StaticArray(AVBufferRef*, 8)
@@ -4038,14 +4038,14 @@ module AV
     color_trc : AVColorTransferCharacteristic
     colorspace : AVColorSpace
     chroma_location : AVChromaLocation
-    best_effort_timestamp : Int64T
-    pkt_pos : Int64T
-    pkt_duration : Int64T
+    best_effort_timestamp : Int64
+    pkt_pos : Int64
+    pkt_duration : Int64
     metadata : AVDictionary*
     decode_error_flags : LibC::Int
     channels : LibC::Int
     pkt_size : LibC::Int
-    qscale_table : Int8T*
+    qscale_table : Int8*
     qstride : LibC::Int
     qscale_type : LibC::Int
     qp_table_buf : AVBufferRef*
@@ -4057,14 +4057,14 @@ module AV
     crop_right : SizeT
   end
 
-  fun av_frame_get_best_effort_timestamp(AVFrame*) : Int64T
-  fun av_frame_set_best_effort_timestamp(AVFrame*, Int64T) : Void
-  fun av_frame_get_pkt_duration(AVFrame*) : Int64T
-  fun av_frame_set_pkt_duration(AVFrame*, Int64T) : Void
-  fun av_frame_get_pkt_pos(AVFrame*) : Int64T
-  fun av_frame_set_pkt_pos(AVFrame*, Int64T) : Void
-  fun av_frame_get_channel_layout(AVFrame*) : Int64T
-  fun av_frame_set_channel_layout(AVFrame*, Int64T) : Void
+  fun av_frame_get_best_effort_timestamp(AVFrame*) : Int64
+  fun av_frame_set_best_effort_timestamp(AVFrame*, Int64) : Void
+  fun av_frame_get_pkt_duration(AVFrame*) : Int64
+  fun av_frame_set_pkt_duration(AVFrame*, Int64) : Void
+  fun av_frame_get_pkt_pos(AVFrame*) : Int64
+  fun av_frame_set_pkt_pos(AVFrame*, Int64) : Void
+  fun av_frame_get_channel_layout(AVFrame*) : Int64
+  fun av_frame_set_channel_layout(AVFrame*, Int64) : Void
   fun av_frame_get_channels(AVFrame*) : LibC::Int
   fun av_frame_set_channels(AVFrame*, LibC::Int) : Void
   fun av_frame_get_sample_rate(AVFrame*) : LibC::Int
@@ -4076,7 +4076,7 @@ module AV
   fun av_frame_get_pkt_size(AVFrame*) : LibC::Int
   fun av_frame_set_pkt_size(AVFrame*, LibC::Int) : Void
   fun avpriv_frame_get_metadatap(AVFrame*) : AVDictionary**
-  fun av_frame_get_qp_table(AVFrame*, LibC::Int*, LibC::Int*) : Int8T*
+  fun av_frame_get_qp_table(AVFrame*, LibC::Int*, LibC::Int*) : Int8*
   fun av_frame_set_qp_table(AVFrame*, AVBufferRef*, LibC::Int, LibC::Int) : LibC::Int
   fun av_frame_get_colorspace(AVFrame*) : AVColorSpace
   fun av_frame_set_colorspace(AVFrame*, AVColorSpace) : Void
@@ -4599,7 +4599,7 @@ module AV
     id : LibC::Int
     width : LibC::Int
     height : LibC::Int
-    position : StaticArray(StaticArray(Int16T, 2), 3)
+    position : StaticArray(StaticArray(Int16, 2), 3)
   end
 
   struct AVCPBProperties
@@ -4645,17 +4645,17 @@ module AV
 
   struct AVPacket
     buf : AVBufferRef*
-    pts : Int64T
-    dts : Int64T
+    pts : Int64
+    dts : Int64
     data : UInt8*
     size : LibC::Int
     stream_index : LibC::Int
     flags : LibC::Int
     side_data : AVPacketSideData*
     side_data_elems : LibC::Int
-    duration : Int64T
-    pos : Int64T
-    convergence_duration : Int64T
+    duration : Int64
+    pos : Int64
+    convergence_duration : Int64
   end
 
   enum AVSideDataParamChangeFlags : LibC::UInt
@@ -4689,7 +4689,7 @@ module AV
     priv_data : Void*
     internal : AVCodecInternal*
     opaque : Void*
-    bit_rate : Int64T
+    bit_rate : Int64
     bit_rate_tolerance : LibC::Int
     global_quality : LibC::Int
     compression_level : LibC::Int
@@ -4797,8 +4797,8 @@ module AV
     rc_override_count : LibC::Int
     rc_override : RcOverride*
     rc_eq : LibC::Char*
-    rc_max_rate : Int64T
-    rc_min_rate : Int64T
+    rc_max_rate : Int64
+    rc_min_rate : Int64
     rc_buffer_aggressivity : LibC::Float
     rc_initial_cplx : LibC::Float
     rc_max_available_vbv_use : LibC::Float
@@ -4815,7 +4815,7 @@ module AV
     trellis : LibC::Int
     min_prediction_order : LibC::Int
     max_prediction_order : LibC::Int
-    timecode_frame_start : Int64T
+    timecode_frame_start : Int64
     rtp_callback : (AVCodecContext*, Void*, LibC::Int, LibC::Int) -> Void*
     rtp_payload_size : LibC::Int
     mv_bits : LibC::Int
@@ -4835,7 +4835,7 @@ module AV
     debug : LibC::Int
     debug_mv : LibC::Int
     err_recognition : LibC::Int
-    reordered_opaque : Int64T
+    reordered_opaque : Int64
     hwaccel : AVHWAccel*
     hwaccel_context : Void*
     error : StaticArray(UInt64, 8)
@@ -4867,10 +4867,10 @@ module AV
     sw_pix_fmt : AVPixelFormat
     pkt_timebase : AVRational
     codec_descriptor : AVCodecDescriptor*
-    pts_correction_num_faulty_pts : Int64T
-    pts_correction_num_faulty_dts : Int64T
-    pts_correction_last_pts : Int64T
-    pts_correction_last_dts : Int64T
+    pts_correction_num_faulty_pts : Int64
+    pts_correction_num_faulty_dts : Int64
+    pts_correction_last_pts : Int64
+    pts_correction_last_dts : Int64
     sub_charenc : LibC::Char*
     sub_charenc_mode : LibC::Int
     skip_alpha : LibC::Int
@@ -4884,7 +4884,7 @@ module AV
     hw_frames_ctx : AVBufferRef*
     sub_text_format : LibC::Int
     trailing_padding : LibC::Int
-    max_pixels : Int64T
+    max_pixels : Int64
     hw_device_ctx : AVBufferRef*
     hwaccel_flags : LibC::Int
     apply_cropping : LibC::Int
@@ -4918,7 +4918,7 @@ module AV
     pix_fmts : AVPixelFormat*
     supported_samplerates : LibC::Int*
     sample_fmts : AVSampleFormat*
-    channel_layouts : Uint64T*
+    channel_layouts : UInt64*
     max_lowres : UInt8
     priv_class : AVClass*
     profiles : AVProfile*
@@ -4994,7 +4994,7 @@ module AV
     end_display_time : UInt32
     num_rects : LibC::UInt
     rects : AVSubtitleRect**
-    pts : Int64T
+    pts : Int64
   end
 
   struct AVCodecParameters
@@ -5004,7 +5004,7 @@ module AV
     extradata : UInt8*
     extradata_size : LibC::Int
     format : LibC::Int
-    bit_rate : Int64T
+    bit_rate : Int64
     bits_per_coded_sample : LibC::Int
     bits_per_raw_sample : LibC::Int
     profile : LibC::Int
@@ -5070,7 +5070,7 @@ module AV
   fun av_packet_split_side_data(AVPacket*) : LibC::Int
   fun av_packet_side_data_name(AVPacketSideDataType) : LibC::Char*
   fun av_packet_pack_dictionary(AVDictionary*, LibC::Int*) : UInt8*
-  fun av_packet_unpack_dictionary(Uint8T*, LibC::Int, AVDictionary**) : LibC::Int
+  fun av_packet_unpack_dictionary(UInt8*, LibC::Int, AVDictionary**) : LibC::Int
   fun av_packet_free_side_data(AVPacket*) : Void
   fun av_packet_ref(AVPacket*, AVPacket*) : LibC::Int
   fun av_packet_unref(AVPacket*) : Void
@@ -5101,31 +5101,31 @@ module AV
   struct AVCodecParserContext
     priv_data : Void*
     parser : AVCodecParser*
-    frame_offset : Int64T
-    cur_offset : Int64T
-    next_frame_offset : Int64T
+    frame_offset : Int64
+    cur_offset : Int64
+    next_frame_offset : Int64
     pict_type : LibC::Int
     repeat_pict : LibC::Int
-    pts : Int64T
-    dts : Int64T
-    last_pts : Int64T
-    last_dts : Int64T
+    pts : Int64
+    dts : Int64
+    last_pts : Int64
+    last_dts : Int64
     fetch_timestamp : LibC::Int
     cur_frame_start_index : LibC::Int
-    cur_frame_offset : StaticArray(Int64T, 4)
-    cur_frame_pts : StaticArray(Int64T, 4)
-    cur_frame_dts : StaticArray(Int64T, 4)
+    cur_frame_offset : StaticArray(Int64, 4)
+    cur_frame_pts : StaticArray(Int64, 4)
+    cur_frame_dts : StaticArray(Int64, 4)
     flags : LibC::Int
-    offset : Int64T
-    cur_frame_end : StaticArray(Int64T, 4)
+    offset : Int64
+    cur_frame_end : StaticArray(Int64, 4)
     key_frame : LibC::Int
-    convergence_duration : Int64T
+    convergence_duration : Int64
     dts_sync_point : LibC::Int
     dts_ref_dts_delta : LibC::Int
     pts_dts_delta : LibC::Int
-    cur_frame_pos : StaticArray(Int64T, 4)
-    pos : Int64T
-    last_pos : Int64T
+    cur_frame_pos : StaticArray(Int64, 4)
+    pos : Int64
+    last_pos : Int64
     duration : LibC::Int
     field_order : AVFieldOrder
     picture_structure : AVPictureStructure
@@ -5150,8 +5150,8 @@ module AV
   fun av_parser_next(AVCodecParser*) : AVCodecParser*
   fun av_register_codec_parser(AVCodecParser*) : Void
   fun av_parser_init(LibC::Int) : AVCodecParserContext*
-  fun av_parser_parse2(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, Uint8T*, LibC::Int, Int64T, Int64T, Int64T) : LibC::Int
-  fun av_parser_change(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
+  fun av_parser_parse2(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, Int64, Int64, Int64) : LibC::Int
+  fun av_parser_change(AVCodecParserContext*, AVCodecContext*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
   fun av_parser_close(AVCodecParserContext*) : Void
   fun avcodec_find_encoder(AVCodecID) : AVCodec*
   fun avcodec_find_encoder_by_name(LibC::Char*) : AVCodec*
@@ -5169,7 +5169,7 @@ module AV
   fun av_resample_close(AVResampleContext*) : Void
   fun avpicture_alloc(AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
   fun avpicture_free(AVPicture*) : Void
-  fun avpicture_fill(AVPicture*, Uint8T*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
+  fun avpicture_fill(AVPicture*, UInt8*, AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
   fun avpicture_layout(AVPicture*, AVPixelFormat, LibC::Int, LibC::Int, LibC::Char*, LibC::Int) : LibC::Int
   fun avpicture_get_size(AVPixelFormat, LibC::Int, LibC::Int) : LibC::Int
   fun av_picture_copy(AVPicture*, AVPicture*, AVPixelFormat, LibC::Int, LibC::Int) : Void
@@ -5189,7 +5189,7 @@ module AV
   fun avcodec_profile_name(AVCodecID, LibC::Int) : LibC::Char*
   fun avcodec_default_execute(AVCodecContext*, (AVCodecContext*, Void*) -> LibC::Int*, Void*, LibC::Int*, LibC::Int, LibC::Int) : LibC::Int
   fun avcodec_default_execute2(AVCodecContext*, (AVCodecContext*, Void*, LibC::Int, LibC::Int) -> LibC::Int*, Void*, LibC::Int*, LibC::Int) : LibC::Int
-  fun avcodec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
+  fun avcodec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, UInt8*, LibC::Int, LibC::Int) : LibC::Int
   fun avcodec_flush_buffers(AVCodecContext*) : Void
   fun av_get_bits_per_sample(AVCodecID) : LibC::Int
   fun av_get_pcm_codec(AVSampleFormat, LibC::Int) : AVCodecID
@@ -5228,7 +5228,7 @@ module AV
 
   fun av_register_bitstream_filter(AVBitStreamFilter*) : Void
   fun av_bitstream_filter_init(LibC::Char*) : AVBitStreamFilterContext*
-  fun av_bitstream_filter_filter(AVBitStreamFilterContext*, AVCodecContext*, LibC::Char*, UInt8**, LibC::Int*, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
+  fun av_bitstream_filter_filter(AVBitStreamFilterContext*, AVCodecContext*, LibC::Char*, UInt8**, LibC::Int*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
   fun av_bitstream_filter_close(AVBitStreamFilterContext*) : Void
   fun av_bitstream_filter_next(AVBitStreamFilter*) : AVBitStreamFilter*
   fun av_bsf_get_by_name(LibC::Char*) : AVBitStreamFilter*

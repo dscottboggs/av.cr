@@ -1,6 +1,6 @@
 module AV
 lib LibAVCodec
-#   AVFILTER_AVFILTER_H = 
+#   AVFILTER_AVFILTER_H =
     AVFILTER_FLAG_DYNAMIC_INPUTS = 1<<0
     AVFILTER_FLAG_DYNAMIC_OUTPUTS = 1<<1
     AVFILTER_FLAG_SLICE_THREADS = 1<<2
@@ -88,8 +88,8 @@ lib LibAVCodec
     # WARNING: unexpected EnumDecl within StructDecl (visit_struct)
     init_state : Enum AVFilterLink::(anonymous at /usr/include/x8664-linux-gnu/libavfilter/avfilter.h:487:5)
     graph : AVFilterGraph*
-    current_pts : Int64T
-    current_pts_us : Int64T
+    current_pts : Int64
+    current_pts_us : Int64
     age_index : LibC::Int
     frame_rate : AVRational
     partial_buf : AVFrame*
@@ -98,8 +98,8 @@ lib LibAVCodec
     max_samples : LibC::Int
     channels : LibC::Int
     flags : LibC::UInt
-    frame_count_in : Int64T
-    frame_count_out : Int64T
+    frame_count_in : Int64
+    frame_count_out : Int64
     frame_pool : Void*
     frame_wanted_out : LibC::Int
     hw_frames_ctx : AVBufferRef*

@@ -1,5 +1,7 @@
+require "./extra_types/libavresample"
 module AV
-  lib LibAVCodec
+  @[Link("avresample")]
+  lib LibAVResample
     #   AVRESAMPLE_AVRESAMPLE_H =
     AVRESAMPLE_MAX_CHANNELS = 32
     type AVAudioResampleContext = Void
@@ -41,7 +43,7 @@ module AV
     fun get_delay = avresample_get_delay(AVAudioResampleContext*) : LibC::Int
     fun available = avresample_available(AVAudioResampleContext*) : LibC::Int
     fun read = avresample_read(AVAudioResampleContext*, UInt8**, LibC::Int) : LibC::Int
-    fun convert_frame = avresample_convert_frame(AVAudioResampleContext*, AVFrame*, AVFrame*) : LibC::Int
-    fun config = avresample_config(AVAudioResampleContext*, AVFrame*, AVFrame*) : LibC::Int
+    fun convert_frame = avresample_convert_frame(AVAudioResampleContext*, LibAVCodec::AVFrame*, LibAVCodec::AVFrame*) : LibC::Int
+    fun config = avresample_config(AVAudioResampleContext*, LibAVCodec::AVFrame*, LibAVCodec::AVFrame*) : LibC::Int
   end
 end
