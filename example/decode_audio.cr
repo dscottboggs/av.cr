@@ -5,7 +5,7 @@ require "../src/bindings/libavutil/channel_layout"
 
 struct Resampler
   @internal : Pointer(AV::LibSWResample::SwrContext)
-  property codec : Pointer(AV::LibSWResample::AVCodecContext)
+  property codec : Pointer(AV::LibSWResample::CodecContext)
   delegate :to_unsafe, to: @internal
   def initialize(for @codec)
     @internal = AV::LibSWResample.alloc
@@ -33,7 +33,7 @@ def decode_audio_file(path : String, sample_rate : Int32)
   AV.register_all
 
   # get format from audio file
-  fmt : Pointer(AV::LibAVFormat::AVFormatContext) = AV::LibAVFormat.alloc_context
+  fmt : Pointer(AV::LibAVFormat::FormatContext) = AV::LibAVFormat.alloc_context
   if AV::LibAVFormat.open_input(fmt.value, path, nil, nil) != 0
     abort "Could not open file at #{path}"
   end
@@ -43,7 +43,7 @@ def decode_audio_file(path : String, sample_rate : Int32)
 
   # Find the index of the first audio stream
   stream_index = fmt.value.nb_streams.find do |stream|
-    stream.value.codec.value.codec_type == AV::LibAVUtil::AVMediaType::AUDIO
+    stream.value.codec.value.codec_type == AV::LibAVUtil::MediaType::AUDIO
   end || -1
 
   abort "No audio stream found in file at #{path.inspect}" if stream_index == -1
