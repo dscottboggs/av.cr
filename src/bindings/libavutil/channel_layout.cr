@@ -1,6 +1,6 @@
 module AV
   lib LibAVUtil
-    enum Channel
+    enum Channel : UInt64
       FRONT_LEFT            = 0x00000001
       FRONT_RIGHT           = 0x00000002
       FRONT_CENTER          = 0x00000004
@@ -21,41 +21,41 @@ module AV
       TOP_BACK_RIGHT        = 0x00020000
       STEREO_LEFT           = 0x20000000
       STEREO_RIGHT          = 0x40000000
-      WIDE_LEFT             = ULongLong.new(0x0000000080000000)
-      WIDE_RIGHT            = ULongLong.new(0x0000000100000000)
-      SURROUND_DIRECT_LEFT  = ULongLong.new(0x0000000200000000)
-      SURROUND_DIRECT_RIGHT = ULongLong.new(0x0000000400000000)
-      LOW_FREQUENCY_2       = ULongLong.new(0x0000000800000000)
+      WIDE_LEFT             = 0x0000000080000000_u64
+      WIDE_RIGHT            = 0x0000000100000000_u64
+      SURROUND_DIRECT_LEFT  = 0x0000000200000000_u64
+      SURROUND_DIRECT_RIGHT = 0x0000000400000000_u64
+      LOW_FREQUENCY_2       = 0x0000000800000000_u64
     end
-    enum ChannelLayout
-      NATIVE                = ULongLong.new(0x8000000000000000)
+    enum ChannelLayout : UInt64
+      NATIVE                = 0x8000000000000000_u64
       MONO                  = Channel::FRONT_CENTER
       STEREO                = Channel::FRONT_LEFT | Channel::FRONT_RIGHT
-      TwoPoint1             = ChannelLayout::STEREO | Channel::LOW_FREQUENCY
-      TwoPlus1              = ChannelLayout::STEREO | Channel::BACK_CENTER
-      SURROUND              = ChannelLayout::STEREO | Channel::FRONT_CENTER
-      ThreePoint1           = ChannelLayout::SURROUND | Channel::LOW_FREQUENCY
-      FourPoint0            = ChannelLayout::SURROUND | Channel::BACK_CENTER
-      FourPoint1            = ChannelLayout::FourPoint0 | Channel::LOW_FREQUENCY
-      TwoPlusTwo            = ChannelLayout::STEREO | Channel::SIDE_LEFT | Channel::SIDE_RIGHT
-      QUAD                  = ChannelLayout::STEREO | Channel::BACK_LEFT | Channel::BACK_RIGHT
-      FivePoint0            = ChannelLayout::SURROUND | Channel::SIDE_LEFT | Channel::SIDE_RIGHT
-      FivePoint1            = ChannelLayout::FivePoint0 | Channel::LOW_FREQUENCY
-      FivePoint0_BACK       = ChannelLayout::SURROUND | Channel::BACK_LEFT | Channel::BACK_RIGHT
-      FivePoint1_BACK       = ChannelLayout::FivePoint0_BACK | Channel::LOW_FREQUENCY
-      SixPoint0             = ChannelLayout::FivePoint0 | Channel::BACK_CENTER
-      SixPoint0_FRONT       = ChannelLayout::TwoPlusTwo | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
-      HEXAGONAL             = ChannelLayout::FivePoint0_BACK | Channel::BACK_CENTER
-      SixPoint1             = ChannelLayout::FivePoint1 | Channel::BACK_CENTER
-      SixPoint1_BACK        = ChannelLayout::FivePoint1_BACK | Channel::BACK_CENTER
-      SixPoint1_FRONT       = ChannelLayout::SixPoint0_FRONT | Channel::LOW_FREQUENCY
-      SevenPoint0           = ChannelLayout::FivePoint0 | Channel::BACK_LEFT | Channel::BACK_RIGHT
-      SevenPoint0_FRONT     = ChannelLayout::FivePoint0 | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
-      SevenPoint1           = ChannelLayout::FivePoint1 | Channel::BACK_LEFT | Channel::BACK_RIGHT
-      SevenPoint1_WIDE      = ChannelLayout::FivePoint1 | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
-      SevenPoint1_WIDE_BACK = ChannelLayout::FivePoint1_BACK | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
-      OCTAGONAL             = ChannelLayout::FivePoint0 | Channel::BACK_LEFT | Channel::BACK_CENTER | Channel::BACK_RIGHT
-      HEXADECAGONAL         = ChannelLayout::OCTAGONAL | Channel::WIDE_LEFT | Channel::WIDE_RIGHT | Channel::TOP_BACK_LEFT | Channel::TOP_BACK_RIGHT | Channel::TOP_BACK_CENTER | Channel::TOP_FRONT_CENTER | Channel::TOP_FRONT_LEFT | Channel::TOP_FRONT_RIGHT
+      TwoPoint1             = STEREO | Channel::LOW_FREQUENCY
+      TwoPlus1              = STEREO | Channel::BACK_CENTER
+      SURROUND              = STEREO | Channel::FRONT_CENTER
+      ThreePoint1           = SURROUND | Channel::LOW_FREQUENCY
+      FourPoint0            = SURROUND | Channel::BACK_CENTER
+      FourPoint1            = FourPoint0 | Channel::LOW_FREQUENCY
+      TwoPlusTwo            = STEREO | Channel::SIDE_LEFT | Channel::SIDE_RIGHT
+      QUAD                  = STEREO | Channel::BACK_LEFT | Channel::BACK_RIGHT
+      FivePoint0            = SURROUND | Channel::SIDE_LEFT | Channel::SIDE_RIGHT
+      FivePoint1            = FivePoint0 | Channel::LOW_FREQUENCY
+      FivePoint0_BACK       = SURROUND | Channel::BACK_LEFT | Channel::BACK_RIGHT
+      FivePoint1_BACK       = FivePoint0_BACK | Channel::LOW_FREQUENCY
+      SixPoint0             = FivePoint0 | Channel::BACK_CENTER
+      SixPoint0_FRONT       = TwoPlusTwo | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
+      HEXAGONAL             = FivePoint0_BACK | Channel::BACK_CENTER
+      SixPoint1             = FivePoint1 | Channel::BACK_CENTER
+      SixPoint1_BACK        = FivePoint1_BACK | Channel::BACK_CENTER
+      SixPoint1_FRONT       = SixPoint0_FRONT | Channel::LOW_FREQUENCY
+      SevenPoint0           = FivePoint0 | Channel::BACK_LEFT | Channel::BACK_RIGHT
+      SevenPoint0_FRONT     = FivePoint0 | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
+      SevenPoint1           = FivePoint1 | Channel::BACK_LEFT | Channel::BACK_RIGHT
+      SevenPoint1_WIDE      = FivePoint1 | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
+      SevenPoint1_WIDE_BACK = FivePoint1_BACK | Channel::FRONT_LEFT_OF_CENTER | Channel::FRONT_RIGHT_OF_CENTER
+      OCTAGONAL             = FivePoint0 | Channel::BACK_LEFT | Channel::BACK_CENTER | Channel::BACK_RIGHT
+      HEXADECAGONAL         = OCTAGONAL | Channel::WIDE_LEFT | Channel::WIDE_RIGHT | Channel::TOP_BACK_LEFT | Channel::TOP_BACK_RIGHT | Channel::TOP_BACK_CENTER | Channel::TOP_FRONT_CENTER | Channel::TOP_FRONT_LEFT | Channel::TOP_FRONT_RIGHT
       STEREO_DOWNMIX        = Channel::STEREO_LEFT | Channel::STEREO_RIGHT
     end
     enum MatrixEncoding : LibC::UInt
@@ -74,7 +74,7 @@ module AV
     fun get_channel_layout_string = av_get_channel_layout_string(LibC::Char*, LibC::Int, LibC::Int, UInt64) : Void
     fun bprint_channel_layout = av_bprint_channel_layout(AVBPrint*, LibC::Int, UInt64) : Void
     fun get_channel_layout_nb_channels = av_get_channel_layout_nb_channels(UInt64) : LibC::Int
-    fun get_default_channel_layout = av_get_default_channel_layout(LibC::Int) : Int64T
+    fun get_default_channel_layout = av_get_default_channel_layout(LibC::Int) : Int64
     fun get_channel_layout_channel_index = av_get_channel_layout_channel_index(UInt64, UInt64) : LibC::Int
     fun channel_layout_extract_channel = av_channel_layout_extract_channel(UInt64, LibC::Int) : UInt64
     fun get_channel_name = av_get_channel_name(UInt64) : LibC::Char*

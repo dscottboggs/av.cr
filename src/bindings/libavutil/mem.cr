@@ -26,7 +26,7 @@ lib LibAVUtil
   fun memcpy_backptr = av_memcpy_backptr(UInt8*, LibC::Int, LibC::Int) : Void
   fun dynarray_add = av_dynarray_add(Void*, LibC::Int*, Void*) : Void
   fun dynarray_add_nofree = av_dynarray_add_nofree(Void*, LibC::Int*, Void*) : LibC::Int
-  fun dynarray2_add = av_dynarray2_add(Void**, LibC::Int*, SizeT, Uint8T*) : Void*
+  fun dynarray2_add = av_dynarray2_add(Void**, LibC::Int*, SizeT, UInt8*) : Void*
   fun size_mult = av_size_mult(SizeT, SizeT, SizeT*) : LibC::Int
   fun max_alloc = av_max_alloc(SizeT) : Void
 end

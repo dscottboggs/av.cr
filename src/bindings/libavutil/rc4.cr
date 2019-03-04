@@ -8,7 +8,7 @@ module AV
     end
 
     fun rc4_alloc = av_rc4_alloc : RC4*
-    fun rc4_init = av_rc4_init(RC4*, Uint8T*, LibC::Int, LibC::Int) : LibC::Int
-    fun rc4_crypt = av_rc4_crypt(RC4*, UInt8*, Uint8T*, LibC::Int, UInt8*, LibC::Int) : Void
+    fun rc4_init = av_rc4_init(RC4*, UInt8*, LibC::Int, LibC::Int) : LibC::Int
+    fun rc4_crypt = av_rc4_crypt(RC4*, UInt8*, UInt8*, LibC::Int, UInt8*, LibC::Int) : Void
   end
 end

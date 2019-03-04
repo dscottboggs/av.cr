@@ -13,6 +13,6 @@ module AV
     end
     fun crc_init = av_crc_init(CRC*, LibC::Int, LibC::Int, UInt32, LibC::Int) : LibC::Int
     fun crc_get_table = av_crc_get_table(CRCId) : CRC*
-    fun crc = av_crc(CRC*, UInt32, Uint8T*, SizeT) : UInt32
+    fun crc = av_crc(CRC*, UInt32, UInt8*, SizeT) : UInt32
   end
 end

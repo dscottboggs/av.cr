@@ -38,7 +38,7 @@ module AV
       QUOTE     = 2
     end
     fun escape = av_escape(LibC::Char**, LibC::Char*, LibC::Char*, EscapeMode, LibC::Int) : LibC::Int
-    fun utf8_decode = av_utf8_decode(Int32T*, Uint8T**, Uint8T*, LibC::UInt) : LibC::Int
+    fun utf8_decode = av_utf8_decode(Int32*, UInt8**, UInt8*, LibC::UInt) : LibC::Int
     fun match_list = av_match_list(LibC::Char*, LibC::Char*, LibC::Char) : LibC::Int
   end
 end

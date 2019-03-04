@@ -31,3 +31,5 @@ done
 for util in $utils; do
   bind_util LibAVUtil libavutil/$util
 done
+
+bind_lib LibAVIO libavformat/avio

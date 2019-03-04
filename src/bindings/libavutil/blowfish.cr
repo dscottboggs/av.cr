@@ -8,8 +8,8 @@ module AV
     end
 
     fun blowfish_alloc = av_blowfish_alloc : Blowfish*
-    fun blowfish_init = av_blowfish_init(Blowfish*, Uint8T*, LibC::Int) : Void
+    fun blowfish_init = av_blowfish_init(Blowfish*, UInt8*, LibC::Int) : Void
     fun blowfish_crypt_ecb = av_blowfish_crypt_ecb(Blowfish*, UInt32*, UInt32*, LibC::Int) : Void
-    fun blowfish_crypt = av_blowfish_crypt(Blowfish*, UInt8*, Uint8T*, LibC::Int, UInt8*, LibC::Int) : Void
+    fun blowfish_crypt = av_blowfish_crypt(Blowfish*, UInt8*, UInt8*, LibC::Int, UInt8*, LibC::Int) : Void
   end
 end

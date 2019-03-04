@@ -8,6 +8,7 @@ module AV
     # AV_BPRINT_SIZE_UNLIMITED = ( unsigned)-1
     AV_BPRINT_SIZE_AUTOMATIC  =   1
     AV_BPRINT_SIZE_COUNT_ONLY = 0o0
+    type VaList = Void*
 
     struct FfPadHelperAVBPrint
       str : LibC::Char*

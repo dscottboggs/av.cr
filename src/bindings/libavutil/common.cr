@@ -87,12 +87,12 @@ module AV
     fun log2 = av_log2(LibC::UInt) : LibC::Int
     fun log2_16bit = av_log2_16bit(LibC::UInt) : LibC::Int
     fun clip_c = av_clip_c(LibC::Int, LibC::Int, LibC::Int) : LibC::Int
-    fun clip64_c = av_clip64_c(Int64T, Int64T, Int64T) : Int64T
+    fun clip64_c = av_clip64_c(Int64, Int64, Int64) : Int64
     fun clip_uint8_c = av_clip_uint8_c(LibC::Int) : UInt8
-    fun clip_int8_c = av_clip_int8_c(LibC::Int) : Int8T
+    fun clip_int8_c = av_clip_int8_c(LibC::Int) : Int8
     fun clip_uint16_c = av_clip_uint16_c(LibC::Int) : UInt16
-    fun clip_int16_c = av_clip_int16_c(LibC::Int) : Int16T
-    fun clipl_int32_c = av_clipl_int32_c(Int64T) : Int32T
+    fun clip_int16_c = av_clip_int16_c(LibC::Int) : Int16
+    fun clipl_int32_c = av_clipl_int32_c(Int64) : Int32
     fun clip_intp2_c = av_clip_intp2_c(LibC::Int, LibC::Int) : LibC::Int
     fun clip_uintp2_c = av_clip_uintp2_c(LibC::Int, LibC::Int) : LibC::UInt
     fun mod_uintp2_c = av_mod_uintp2_c(LibC::UInt, LibC::UInt) : LibC::UInt
