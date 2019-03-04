@@ -100,48 +100,48 @@ module AV
       crop_right : LibC::SizeT
     end
 
-    fun av_frame_get_best_effort_timestamp(Frame*) : Int64
-    fun av_frame_set_best_effort_timestamp(Frame*, Int64) : Void
-    fun av_frame_get_pkt_duration(Frame*) : Int64
-    fun av_frame_set_pkt_duration(Frame*, Int64) : Void
-    fun av_frame_get_pkt_pos(Frame*) : Int64
-    fun av_frame_set_pkt_pos(Frame*, Int64) : Void
-    fun av_frame_get_channel_layout(Frame*) : Int64
-    fun av_frame_set_channel_layout(Frame*, Int64) : Void
-    fun av_frame_get_channels(Frame*) : LibC::Int
-    fun av_frame_set_channels(Frame*, LibC::Int) : Void
-    fun av_frame_get_sample_rate(Frame*) : LibC::Int
-    fun av_frame_set_sample_rate(Frame*, LibC::Int) : Void
-    fun av_frame_get_metadata(Frame*) : Dictionary*
-    fun av_frame_set_metadata(Frame*, Dictionary*) : Void
-    fun av_frame_get_decode_error_flags(Frame*) : LibC::Int
-    fun av_frame_set_decode_error_flags(Frame*, LibC::Int) : Void
-    fun av_frame_get_pkt_size(Frame*) : LibC::Int
-    fun av_frame_set_pkt_size(Frame*, LibC::Int) : Void
+    fun frame_get_best_effort_timestamp = av_frame_get_best_effort_timestamp(Frame*) : Int64
+    fun frame_set_best_effort_timestamp = av_frame_set_best_effort_timestamp(Frame*, Int64) : Void
+    fun frame_get_pkt_duration = av_frame_get_pkt_duration(Frame*) : Int64
+    fun frame_set_pkt_duration = av_frame_set_pkt_duration(Frame*, Int64) : Void
+    fun frame_get_pkt_pos = av_frame_get_pkt_pos(Frame*) : Int64
+    fun frame_set_pkt_pos = av_frame_set_pkt_pos(Frame*, Int64) : Void
+    fun frame_get_channel_layout = av_frame_get_channel_layout(Frame*) : Int64
+    fun frame_set_channel_layout = av_frame_set_channel_layout(Frame*, Int64) : Void
+    fun frame_get_channels = av_frame_get_channels(Frame*) : LibC::Int
+    fun frame_set_channels = av_frame_set_channels(Frame*, LibC::Int) : Void
+    fun frame_get_sample_rate = av_frame_get_sample_rate(Frame*) : LibC::Int
+    fun frame_set_sample_rate = av_frame_set_sample_rate(Frame*, LibC::Int) : Void
+    fun frame_get_metadata = av_frame_get_metadata(Frame*) : Dictionary*
+    fun frame_set_metadata = av_frame_set_metadata(Frame*, Dictionary*) : Void
+    fun frame_get_decode_error_flags = av_frame_get_decode_error_flags(Frame*) : LibC::Int
+    fun frame_set_decode_error_flags = av_frame_set_decode_error_flags(Frame*, LibC::Int) : Void
+    fun frame_get_pkt_size = av_frame_get_pkt_size(Frame*) : LibC::Int
+    fun frame_set_pkt_size = av_frame_set_pkt_size(Frame*, LibC::Int) : Void
     fun avpriv_frame_get_metadatap(Frame*) : Dictionary**
-    fun av_frame_get_qp_table(Frame*, LibC::Int*, LibC::Int*) : Int8*
-    fun av_frame_set_qp_table(Frame*, BufferRef*, LibC::Int, LibC::Int) : LibC::Int
-    fun av_frame_get_colorspace(Frame*) : ColorSpace
-    fun av_frame_set_colorspace(Frame*, ColorSpace) : Void
-    fun av_frame_get_color_range(Frame*) : ColorRange
-    fun av_frame_set_color_range(Frame*, ColorRange) : Void
-    fun av_get_colorspace_name(ColorSpace) : LibC::Char*
-    fun av_frame_alloc : Frame*
-    fun av_frame_free(Frame**) : Void
-    fun av_frame_ref(Frame*, Frame*) : LibC::Int
-    fun av_frame_clone(Frame*) : Frame*
-    fun av_frame_unref(Frame*) : Void
-    fun av_frame_move_ref(Frame*, Frame*) : Void
-    fun av_frame_get_buffer(Frame*, LibC::Int) : LibC::Int
-    fun av_frame_is_writable(Frame*) : LibC::Int
-    fun av_frame_make_writable(Frame*) : LibC::Int
-    fun av_frame_copy(Frame*, Frame*) : LibC::Int
-    fun av_frame_copy_props(Frame*, Frame*) : LibC::Int
-    fun av_frame_get_plane_buffer(Frame*, LibC::Int) : BufferRef*
-    fun av_frame_new_side_data(Frame*, FrameSideDataType, LibC::Int) : FrameSideData*
-    fun av_frame_get_side_data(Frame*, FrameSideDataType) : FrameSideData*
-    fun av_frame_remove_side_data(Frame*, FrameSideDataType) : Void
-    fun av_frame_apply_cropping(Frame*, LibC::Int) : LibC::Int
-    fun av_frame_side_data_name(FrameSideDataType) : LibC::Char*
+    fun frame_get_qp_table = av_frame_get_qp_table(Frame*, LibC::Int*, LibC::Int*) : Int8*
+    fun frame_set_qp_table = av_frame_set_qp_table(Frame*, BufferRef*, LibC::Int, LibC::Int) : LibC::Int
+    fun frame_get_colorspace = av_frame_get_colorspace(Frame*) : ColorSpace
+    fun frame_set_colorspace = av_frame_set_colorspace(Frame*, ColorSpace) : Void
+    fun frame_get_color_range = av_frame_get_color_range(Frame*) : ColorRange
+    fun frame_set_color_range = av_frame_set_color_range(Frame*, ColorRange) : Void
+    fun get_colorspace_name = av_get_colorspace_name(ColorSpace) : LibC::Char*
+    fun frame_alloc = av_frame_alloc : Frame*
+    fun frame_free = av_frame_free(Frame**) : Void
+    fun frame_ref = av_frame_ref(Frame*, Frame*) : LibC::Int
+    fun frame_clone = av_frame_clone(Frame*) : Frame*
+    fun frame_unref = av_frame_unref(Frame*) : Void
+    fun frame_move_ref = av_frame_move_ref(Frame*, Frame*) : Void
+    fun frame_get_buffer = av_frame_get_buffer(Frame*, LibC::Int) : LibC::Int
+    fun frame_is_writable = av_frame_is_writable(Frame*) : LibC::Int
+    fun frame_make_writable = av_frame_make_writable(Frame*) : LibC::Int
+    fun frame_copy = av_frame_copy(Frame*, Frame*) : LibC::Int
+    fun frame_copy_props = av_frame_copy_props(Frame*, Frame*) : LibC::Int
+    fun frame_get_plane_buffer = av_frame_get_plane_buffer(Frame*, LibC::Int) : BufferRef*
+    fun frame_new_side_data = av_frame_new_side_data(Frame*, FrameSideDataType, LibC::Int) : FrameSideData*
+    fun frame_get_side_data = av_frame_get_side_data(Frame*, FrameSideDataType) : FrameSideData*
+    fun frame_remove_side_data = av_frame_remove_side_data(Frame*, FrameSideDataType) : Void
+    fun frame_apply_cropping = av_frame_apply_cropping(Frame*, LibC::Int) : LibC::Int
+    fun frame_side_data_name = av_frame_side_data_name(FrameSideDataType) : LibC::Char*
   end
 end
