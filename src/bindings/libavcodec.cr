@@ -1,3 +1,5 @@
+require "./libavutil/rational"
+require "./libavutil/log"
 require "./extra_types/libavcodec"
 module AV
   @[Link("avcodec")]
@@ -969,7 +971,7 @@ module AV
     alias AVCodecContextExecute2Proc = (AVCodecContext*, Void*, LibC::Int, LibC::Int) -> LibC::Int*
 
     struct AVCodecContext
-      av_class : AVClass*
+      av_class : LibAVUtil::Class*
       log_level_offset : LibC::Int
       codec_type : AVMediaType
       codec : AVCodec*
@@ -988,7 +990,7 @@ module AV
       flags2 : LibC::Int
       extradata : UInt8*
       extradata_size : LibC::Int
-      time_base : AVRational
+      time_base : LibAVUtil::Rational
       ticks_per_frame : LibC::Int
       delay : LibC::Int
       width : LibC::Int
@@ -1017,7 +1019,7 @@ module AV
       slice_count : LibC::Int
       prediction_method : LibC::Int
       slice_offset : LibC::Int*
-      sample_aspect_ratio : AVRational
+      sample_aspect_ratio : LibAVUtil::Rational
       me_cmp : LibC::Int
       me_sub_cmp : LibC::Int
       mb_cmp : LibC::Int
@@ -1065,7 +1067,7 @@ module AV
       field_order : AVFieldOrder
       sample_rate : LibC::Int
       channels : LibC::Int
-      sample_fmt : AVSampleFormat
+      sample_fmt : SampleFormat
       frame_size : LibC::Int
       frame_number : LibC::Int
       block_align : LibC::Int
@@ -1073,7 +1075,7 @@ module AV
       channel_layout : UInt64
       request_channel_layout : UInt64
       audio_service_type : AVAudioServiceType
-      request_sample_fmt : AVSampleFormat
+      request_sample_fmt : SampleFormat
       get_buffer2 : (AVCodecContext*, AVFrame*, LibC::Int) -> LibC::Int*
       refcounted_frames : LibC::Int
       qcompress : LibC::Float
@@ -1154,9 +1156,9 @@ module AV
       vbv_delay : UInt64
       side_data_only_packets : LibC::Int
       initial_padding : LibC::Int
-      framerate : AVRational
+      framerate : LibAVUtil::Rational
       sw_pix_fmt : AVPixelFormat
-      pkt_timebase : AVRational
+      pkt_timebase : LibAVUtil::Rational
       codec_descriptor : AVCodecDescriptor*
       pts_correction_num_faulty_pts : Int64
       pts_correction_num_faulty_dts : Int64
@@ -1181,8 +1183,8 @@ module AV
       apply_cropping : LibC::Int
     end
 
-    fun codec_get_pkt_timebase = av_codec_get_pkt_timebase(AVCodecContext*) : AVRational
-    fun codec_set_pkt_timebase = av_codec_set_pkt_timebase(AVCodecContext*, AVRational) : Void
+    fun codec_get_pkt_timebase = av_codec_get_pkt_timebase(AVCodecContext*) : LibAVUtil::Rational
+    fun codec_set_pkt_timebase = av_codec_set_pkt_timebase(AVCodecContext*, LibAVUtil::Rational) : Void
     fun codec_get_codec_descriptor = av_codec_get_codec_descriptor(AVCodecContext*) : AVCodecDescriptor*
     fun codec_set_codec_descriptor = av_codec_set_codec_descriptor(AVCodecContext*, AVCodecDescriptor*) : Void
     fun codec_get_codec_properties = av_codec_get_codec_properties(AVCodecContext*) : LibC::UInt
@@ -1207,13 +1209,13 @@ module AV
       type : AVMediaType
       id : AVCodecID
       capabilities : LibC::Int
-      supported_framerates : AVRational*
+      supported_framerates : LibAVUtil::Rational*
       pix_fmts : AVPixelFormat*
       supported_samplerates : LibC::Int*
-      sample_fmts : AVSampleFormat*
+      sample_fmts : SampleFormat*
       channel_layouts : UInt64*
       max_lowres : UInt8
-      priv_class : AVClass*
+      priv_class : LibAVUtil::Class*
       profiles : AVProfile*
       priv_data_size : LibC::Int
       next : AVCodec*
@@ -1306,7 +1308,7 @@ module AV
       level : LibC::Int
       width : LibC::Int
       height : LibC::Int
-      sample_aspect_ratio : AVRational
+      sample_aspect_ratio : LibAVUtil::Rational
       field_order : AVFieldOrder
       color_range : AVColorRange
       color_primaries : AVColorPrimaries
@@ -1333,9 +1335,9 @@ module AV
     fun alloc_context3 = av_codec_alloc_context3(AVCodec*) : AVCodecContext*
     fun free_context = av_codec_free_context(AVCodecContext**) : Void
     fun get_context_defaults3 = av_codec_get_context_defaults3(AVCodecContext*, AVCodec*) : LibC::Int
-    fun get_class = av_codec_get_class : AVClass*
-    fun get_frame_class = av_codec_get_frame_class : AVClass*
-    fun get_subtitle_rect_class = av_codec_get_subtitle_rect_class : AVClass*
+    fun get_class = av_codec_get_class : LibAVUtil::Class*
+    fun get_frame_class = av_codec_get_frame_class : LibAVUtil::Class*
+    fun get_subtitle_rect_class = av_codec_get_subtitle_rect_class : LibAVUtil::Class*
     fun copy_context = av_codec_copy_context(AVCodecContext*, AVCodecContext*) : LibC::Int
     fun parameters_alloc = av_codec_parameters_alloc : AVCodecParameters*
     fun parameters_free = av_codec_parameters_free(AVCodecParameters**) : Void
@@ -1371,7 +1373,7 @@ module AV
     fun packet_unref = av_packet_unref(AVPacket*) : Void
     fun packet_move_ref = av_packet_move_ref(AVPacket*, AVPacket*) : Void
     fun packet_copy_props = av_packet_copy_props(AVPacket*, AVPacket*) : LibC::Int
-    fun packet_rescale_ts = av_packet_rescale_ts(AVPacket*, AVRational, AVRational) : Void
+    fun packet_rescale_ts = av_packet_rescale_ts(AVPacket*, LibAVUtil::Rational, LibAVUtil::Rational) : Void
     fun find_decoder = av_codec_find_decoder(AVCodecID) : AVCodec*
     fun find_decoder_by_name = av_codec_find_decoder_by_name(LibC::Char*) : AVCodec*
     fun default_get_buffer2 = av_codec_default_get_buffer2(AVCodecContext*, AVFrame*, LibC::Int) : LibC::Int
@@ -1456,7 +1458,7 @@ module AV
     fun encode_subtitle = av_codec_encode_subtitle(AVCodecContext*, UInt8*, LibC::Int, AVSubtitle*) : LibC::Int
     type ReSampleContext = Void
     type AVResampleContext = Void
-    fun audio_resample_init = av_audio_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, AVSampleFormat, AVSampleFormat, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : ReSampleContext*
+    fun audio_resample_init = av_audio_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, SampleFormat, SampleFormat, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : ReSampleContext*
     fun audio_resample(ReSampleContext*, LibC::Short*, LibC::Short*, LibC::Int) : LibC::Int
     fun audio_resample_close(ReSampleContext*) : Void
     fun resample_init = av_resample_init(LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Double) : AVResampleContext*
@@ -1485,10 +1487,10 @@ module AV
     fun profile_name = av_codec_profile_name(AVCodecID, LibC::Int) : LibC::Char*
     fun default_execute = av_codec_default_execute(AVCodecContext*, AVCodecContextExecuteProc, Void*, LibC::Int*, LibC::Int, LibC::Int) : LibC::Int
     fun default_execute2 = av_codec_default_execute2(AVCodecContext*, AVCodecContextExecute2Proc, Void*, LibC::Int*, LibC::Int) : LibC::Int
-    fun fill_audio_frame = av_codec_fill_audio_frame(AVFrame*, LibC::Int, AVSampleFormat, UInt8*, LibC::Int, LibC::Int) : LibC::Int
+    fun fill_audio_frame = av_codec_fill_audio_frame(AVFrame*, LibC::Int, SampleFormat, UInt8*, LibC::Int, LibC::Int) : LibC::Int
     fun flush_buffers = av_codec_flush_buffers(AVCodecContext*) : Void
     fun get_bits_per_sample = av_get_bits_per_sample(AVCodecID) : LibC::Int
-    fun get_pcm_codec = av_get_pcm_codec(AVSampleFormat, LibC::Int) : AVCodecID
+    fun get_pcm_codec = av_get_pcm_codec(SampleFormat, LibC::Int) : AVCodecID
     fun get_exact_bits_per_sample = av_get_exact_bits_per_sample(AVCodecID) : LibC::Int
     fun get_audio_frame_duration = av_get_audio_frame_duration(AVCodecContext*, LibC::Int) : LibC::Int
     fun get_audio_frame_duration2 = av_get_audio_frame_duration2(AVCodecParameters*, LibC::Int) : LibC::Int
@@ -1504,20 +1506,20 @@ module AV
     type AVBSFInternal = Void
 
     struct AVBSFContext
-      av_class : AVClass*
+      av_class : LibAVUtil::Class*
       filter : AVBitStreamFilter*
       internal : AVBSFInternal*
       priv_data : Void*
       par_in : AVCodecParameters*
       par_out : AVCodecParameters*
-      time_base_in : AVRational
-      time_base_out : AVRational
+      time_base_in : LibAVUtil::Rational
+      time_base_out : LibAVUtil::Rational
     end
 
     struct AVBitStreamFilter
       name : LibC::Char*
       codec_ids : AVCodecID*
-      priv_class : AVClass*
+      priv_class : LibAVUtil::Class*
       priv_data_size : LibC::Int
       init : (AVBSFContext*) -> LibC::Int*
       filter : (AVBSFContext*, AVPacket*) -> LibC::Int*
@@ -1536,7 +1538,7 @@ module AV
     fun bsf_send_packet = av_bsf_send_packet(AVBSFContext*, AVPacket*) : LibC::Int
     fun bsf_receive_packet = av_bsf_receive_packet(AVBSFContext*, AVPacket*) : LibC::Int
     fun bsf_free = av_bsf_free(AVBSFContext**) : Void
-    fun bsf_get_class = av_bsf_get_class : AVClass*
+    fun bsf_get_class = av_bsf_get_class : LibAVUtil::Class*
     type AVBSFList = Void
     fun bsf_list_alloc = av_bsf_list_alloc : AVBSFList*
     fun bsf_list_free = av_bsf_list_free(AVBSFList**) : Void

@@ -922,7 +922,7 @@
 <span class="hl com">     *           written into the file (which may or may not be related to the</span>
 <span class="hl com">     *           user-provided one, depending on the format).</span>
 <span class="hl com">     */</span>
-    AVRational time_base<span class="hl opt">;</span>
+    Rational time_base<span class="hl opt">;</span>
 
     <span class="hl com">/**</span>
 <span class="hl com">     * Decoding: pts of the first frame of the stream in presentation order, in stream time base.</span>
@@ -955,7 +955,7 @@
 <span class="hl com">     * - encoding: Set by user.</span>
 <span class="hl com">     * - decoding: Set by libavformat.</span>
 <span class="hl com">     */</span>
-    AVRational sample_aspect_ratio<span class="hl opt">;</span>
+    Rational sample_aspect_ratio<span class="hl opt">;</span>
 
     AVDictionary <span class="hl opt">*</span>metadata<span class="hl opt">;</span>
 
@@ -966,7 +966,7 @@
 <span class="hl com">     *             avformat_find_stream_info().</span>
 <span class="hl com">     * - muxing: May be set by the caller before avformat_write_header().</span>
 <span class="hl com">     */</span>
-    AVRational avg_frame_rate<span class="hl opt">;</span>
+    Rational avg_frame_rate<span class="hl opt">;</span>
 
     <span class="hl com">/**</span>
 <span class="hl com">     * For streams with AV_DISPOSITION_ATTACHED_PIC disposition, this packet</span>
@@ -1104,7 +1104,7 @@
 <span class="hl com">     * Code outside avformat should access this field using:</span>
 <span class="hl com">     * av_stream_get/set_r_frame_rate(stream)</span>
 <span class="hl com">     */</span>
-    AVRational r_frame_rate<span class="hl opt">;</span>
+    Rational r_frame_rate<span class="hl opt">;</span>
 
     <span class="hl com">/**</span>
 <span class="hl com">     * Stream Identifier</span>
@@ -1229,7 +1229,7 @@
 <span class="hl com">     * - encoding: unused</span>
 <span class="hl com">     * - decoding: Set by libavformat to calculate sample_aspect_ratio internally</span>
 <span class="hl com">     */</span>
-    AVRational display_aspect_ratio<span class="hl opt">;</span>
+    Rational display_aspect_ratio<span class="hl opt">;</span>
 
     <span class="hl kwb">struct</span> FFFrac <span class="hl opt">*</span>priv_pts<span class="hl opt">;</span>
 
@@ -1251,8 +1251,8 @@
     AVCodecParameters <span class="hl opt">*</span>codecpar<span class="hl opt">;</span>
 <span class="hl opt">}</span> AVStream<span class="hl opt">;</span>
 
-AVRational <span class="hl kwd">av_stream_get_r_frame_rate</span><span class="hl opt">(</span><span class="hl kwb">const</span> AVStream <span class="hl opt">*</span>s<span class="hl opt">);</span>
-<span class="hl kwb">void</span>       <span class="hl kwd">av_stream_set_r_frame_rate</span><span class="hl opt">(</span>AVStream <span class="hl opt">*</span>s<span class="hl opt">,</span> AVRational r<span class="hl opt">);</span>
+Rational <span class="hl kwd">av_stream_get_r_frame_rate</span><span class="hl opt">(</span><span class="hl kwb">const</span> AVStream <span class="hl opt">*</span>s<span class="hl opt">);</span>
+<span class="hl kwb">void</span>       <span class="hl kwd">av_stream_set_r_frame_rate</span><span class="hl opt">(</span>AVStream <span class="hl opt">*</span>s<span class="hl opt">,</span> Rational r<span class="hl opt">);</span>
 <span class="hl kwb">struct</span> AVCodecParserContext <span class="hl opt">*</span><span class="hl kwd">av_stream_get_parser</span><span class="hl opt">(</span><span class="hl kwb">const</span> AVStream <span class="hl opt">*</span>s<span class="hl opt">);</span>
 <span class="hl kwb">char</span><span class="hl opt">*</span> <span class="hl kwd">av_stream_get_recommended_encoder_configuration</span><span class="hl opt">(</span><span class="hl kwb">const</span> AVStream <span class="hl opt">*</span>s<span class="hl opt">);</span>
 <span class="hl kwb">void</span>  <span class="hl kwd">av_stream_set_recommended_encoder_configuration</span><span class="hl opt">(</span>AVStream <span class="hl opt">*</span>s<span class="hl opt">,</span> <span class="hl kwb">char</span> <span class="hl opt">*</span>configuration<span class="hl opt">);</span>
@@ -1303,7 +1303,7 @@ AVRational <span class="hl kwd">av_stream_get_r_frame_rate</span><span class="hl
 
 <span class="hl kwc">typedef</span> <span class="hl kwb">struct</span> AVChapter <span class="hl opt">{</span>
     <span class="hl kwb">int</span> id<span class="hl opt">;</span>                 <span class="hl slc">///&lt; unique ID to identify the chapter</span>
-    AVRational time_base<span class="hl opt">;</span>   <span class="hl slc">///&lt; time base in which the start/end timestamps are specified</span>
+    Rational time_base<span class="hl opt">;</span>   <span class="hl slc">///&lt; time base in which the start/end timestamps are specified</span>
     <span class="hl kwb">int64_t</span> start<span class="hl opt">,</span> end<span class="hl opt">;</span>     <span class="hl slc">///&lt; chapter start/end time in time_base units</span>
     AVDictionary <span class="hl opt">*</span>metadata<span class="hl opt">;</span>
 <span class="hl opt">}</span> AVChapter<span class="hl opt">;</span>
@@ -2932,7 +2932,7 @@ AVOutputFormat <span class="hl opt">*</span><span class="hl kwd">av_guess_format
 <span class="hl com"> * &#64;param frame the frame with the aspect ratio to be determined</span>
 <span class="hl com"> * &#64;return the guessed (valid) sample_aspect_ratio, 0/1 if no idea</span>
 <span class="hl com"> */</span>
-AVRational <span class="hl kwd">av_guess_sample_aspect_ratio</span><span class="hl opt">(</span>AVFormatContext <span class="hl opt">*</span>format<span class="hl opt">,</span> AVStream <span class="hl opt">*</span>stream<span class="hl opt">,</span> AVFrame <span class="hl opt">*</span>frame<span class="hl opt">);</span>
+Rational <span class="hl kwd">av_guess_sample_aspect_ratio</span><span class="hl opt">(</span>AVFormatContext <span class="hl opt">*</span>format<span class="hl opt">,</span> AVStream <span class="hl opt">*</span>stream<span class="hl opt">,</span> AVFrame <span class="hl opt">*</span>frame<span class="hl opt">);</span>
 
 <span class="hl com">/**</span>
 <span class="hl com"> * Guess the frame rate, based on both the container and codec information.</span>
@@ -2942,7 +2942,7 @@ AVRational <span class="hl kwd">av_guess_sample_aspect_ratio</span><span class="
 <span class="hl com"> * &#64;param frame the frame for which the frame rate should be determined, may be NULL</span>
 <span class="hl com"> * &#64;return the guessed (valid) frame rate, 0/1 if no idea</span>
 <span class="hl com"> */</span>
-AVRational <span class="hl kwd">av_guess_frame_rate</span><span class="hl opt">(</span>AVFormatContext <span class="hl opt">*</span>ctx<span class="hl opt">,</span> AVStream <span class="hl opt">*</span>stream<span class="hl opt">,</span> AVFrame <span class="hl opt">*</span>frame<span class="hl opt">);</span>
+Rational <span class="hl kwd">av_guess_frame_rate</span><span class="hl opt">(</span>AVFormatContext <span class="hl opt">*</span>ctx<span class="hl opt">,</span> AVStream <span class="hl opt">*</span>stream<span class="hl opt">,</span> AVFrame <span class="hl opt">*</span>frame<span class="hl opt">);</span>
 
 <span class="hl com">/**</span>
 <span class="hl com"> * Check if the stream st contained in s is matched by the stream specifier</span>
@@ -3007,7 +3007,7 @@ attribute_deprecated
 <span class="hl com"> *</span>
 <span class="hl com"> * &#64;param st  input stream to extract the timebase from</span>
 <span class="hl com"> */</span>
-AVRational <span class="hl kwd">av_stream_get_codec_timebase</span><span class="hl opt">(</span><span class="hl kwb">const</span> AVStream <span class="hl opt">*</span>st<span class="hl opt">);</span>
+Rational <span class="hl kwd">av_stream_get_codec_timebase</span><span class="hl opt">(</span><span class="hl kwb">const</span> AVStream <span class="hl opt">*</span>st<span class="hl opt">);</span>
 
 <span class="hl com">/**</span>
 <span class="hl com"> * &#64;}</span>

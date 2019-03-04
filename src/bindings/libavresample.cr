@@ -1,4 +1,4 @@
-require "./extra_types/libavresample"
+require "./libavutil/log"
 module AV
   @[Link("avresample")]
   lib LibAVResample
@@ -27,7 +27,7 @@ module AV
     fun version = avresample_version : LibC::UInt
     fun configuration = avresample_configuration : LibC::Char*
     fun license = avresample_license : LibC::Char*
-    fun get_class = avresample_get_class : AVClass*
+    fun get_class = avresample_get_class : LibAVUtil::Class*
     fun alloc_context = avresample_alloc_context : AVAudioResampleContext*
     fun open = avresample_open(AVAudioResampleContext*) : LibC::Int
     fun is_open = avresample_is_open(AVAudioResampleContext*) : LibC::Int

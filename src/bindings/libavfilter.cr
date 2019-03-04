@@ -1,4 +1,4 @@
-require "./extra_types/libavfilter"
+require "./libavutil/log"
 module AV
   @[Link("avfilter")]
   lib LibAVFilter
@@ -28,7 +28,7 @@ module AV
       description : LibC::Char*
       inputs : AVFilterPad*
       outputs : AVFilterPad*
-      priv_class : AVClass*
+      priv_class : LibAVUtil::Class*
       flags : LibC::Int
       preinit : (AVFilterContext*) -> LibC::Int*
       init : (AVFilterContext*) -> LibC::Int*
@@ -46,7 +46,7 @@ module AV
     type AVFilterInternal = Void
 
     struct AVFilterContext
-      av_class : AVClass*
+      av_class : LibAVUtil::Class*
       filter : AVFilter*
       name : LibC::Char*
       input_pads : AVFilterPad*
@@ -83,11 +83,11 @@ module AV
       type : AVMediaType
       w : LibC::Int
       h : LibC::Int
-      sample_aspect_ratio : AVRational
+      sample_aspect_ratio : Rational
       channel_layout : UInt64
       sample_rate : LibC::Int
       format : LibC::Int
-      time_base : AVRational
+      time_base : Rational
       in_formats : AVFilterFormats*
       out_formats : AVFilterFormats*
       in_samplerates : AVFilterFormats*
@@ -100,7 +100,7 @@ module AV
       current_pts : Int64
       current_pts_us : Int64
       age_index : LibC::Int
-      frame_rate : AVRational
+      frame_rate : Rational
       partial_buf : AVFrame*
       partial_buf_size : LibC::Int
       min_samples : LibC::Int
@@ -133,13 +133,13 @@ module AV
     fun init_dict = avfilter_init_dict(AVFilterContext*, AVDictionary**) : LibC::Int
     fun free = avfilter_free(AVFilterContext*) : Void
     fun insert_filter = avfilter_insert_filter(AVFilterLink*, AVFilterContext*, LibC::UInt, LibC::UInt) : LibC::Int
-    fun get_class = avfilter_get_class : AVClass*
+    fun get_class = avfilter_get_class : LibAVUtil::Class*
     type AVFilterGraphInternal = Void
     alias AvfilterActionFunc = (AVFilterContext*, Void*, LibC::Int, LibC::Int) -> Void
     alias AvfilterExecuteFunc = (AVFilterContext*, AvfilterActionFunc*, Void*, LibC::Int*, LibC::Int) -> Void
 
     struct AVFilterGraph
-      av_class : AVClass*
+      av_class : LibAVUtil::Class*
       filters : AVFilterContext**
       nb_filters : LibC::UInt
       scale_sws_opts : LibC::Char*

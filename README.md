@@ -1,6 +1,13 @@
-# avcodec
+# AV -- an audio/video suite for Crystal
+### Built on bindings to LibAV
 
-TODO: Write a description here
+LibAV provides a massive suite of tools for editing, transcoding, and muxing of
+audio, video, and other media files. This **work in progress** library aims to
+be an interface through the Crystal programming language to those features.
+
+## Current state:
+Bindings have been created in general. No wrappers, convenience methods, or
+other features exist yet.
 
 ## Installation
 
@@ -36,4 +43,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [D. Scott Boggs](https://github.com/your-github-user) - creator and maintainer
+- [D. Scott Boggs](https://github.com/dscottboggs) - creator and maintainer

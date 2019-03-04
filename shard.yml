@@ -1,12 +1,15 @@
-name: avcodec
+name: av
 version: 0.1.0
 
 authors:
   - D. Scott Boggs <scott@tams.tech>
 
 dependencies:
-  bindgen:
-    github: Papierkorb/bindgen
+  autobind:
+    github: j8r/autobind
+
+postinstall:
+  - generate-bindings
 
 crystal: 0.27.2
 

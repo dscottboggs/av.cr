@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -uxo pipefail
+
+workdir=$(dirname $(realpath $0))
+autobind_exe=${autobind_exe:-'bin/autobind'}
+
+bind_lib() {
+	$autobind_exe --lib-name=$1 \
+                  -I/usr/include \
+                  --parent-module=AV \
+                  $2.h > "src/bindings/$(basename $2)_generated.cr"
+}
+bind_util() {
+	$autobind_exe --lib-name=$1 \
+                  -I/usr/include \
+                  --parent-module=AV \
+                  $2.h > "src/bindings/libavutil/$(basename $2)_generated.cr"
+
+}
+
+main_libs="codec filter format resample"
+utils="adler32 aes_ctr aes attributes audio_fifo avassert avconfig avstring avutil base64 blowfish bprint bswap buffer camellia cast5 channel_layout common cpu crc des dict display downmix_info error eval ffversion fifo file frame hash hmac hwcontext_cuda hwcontext_d3d11va hwcontext_drm hwcontext_dxva2 hwcontext hwcontext_qsv hwcontext_vaapi hwcontext_vdpau hwcontext_videotoolbox imgutils intfloat intreadwrite lfg log lzo macros mastering_display_metadata mathematics md5 mem motion_vector murmur3 opt parseutils pixdesc pixelutils pixfmt random_seed rational rc4 replaygain ripemd samplefmt sha512 sha spherical stereo3d tea threadmessage timecode time timestamp tree twofish version xtea"
+
+bind_lib LibSWResample libswresample/swresample
+
+for lib in $main_libs; do
+  bind_lib LibAV${lib^} libav$lib/$lib
+done
+
+for util in $utils; do 
+  bind_util LibAVUtil libavutil/$util
+done
+
+
