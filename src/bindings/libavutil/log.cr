@@ -12,7 +12,7 @@ module AV
       VERBOSE    =  40
       DEBUG      =  48
       TRACE      =  56
-      MAX_OFFSET = AV_LOG_TRACE - AV_LOG_QUIET
+      MAX_OFFSET = TRACE - QUIET
     end
     #   AV_LOG_C =  x)(( x)<<8
     #   av_dlog =  pctx,...) do{ if(0) av_log( pctx, AV_LOG_DEBUG, __VA_ARGS__);} while(0

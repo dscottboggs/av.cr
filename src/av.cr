@@ -3,7 +3,7 @@ require "./bindings/libavfilter"
 require "./bindings/libavformat"
 require "./bindings/libavresample"
 require "./bindings/libswresample"
-require "./bindings/libavutil/libavutil"
+require "./bindings/libavutil/avutil"
 
 module AV
   VERSION = "0.1.0"

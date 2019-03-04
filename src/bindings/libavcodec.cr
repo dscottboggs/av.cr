@@ -1,6 +1,5 @@
 require "./libavutil/rational"
 require "./libavutil/log"
-require "./extra_types/libavcodec"
 module AV
   @[Link("avcodec")]
   lib LibAVCodec
