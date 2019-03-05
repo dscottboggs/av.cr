@@ -41,7 +41,7 @@ module AV
     fun next_pts = swr_next_pts(SwrContext*, Int64) : Int64
     fun set_compensation = swr_set_compensation(SwrContext*, LibC::Int, LibC::Int) : LibC::Int
     fun set_channel_mapping = swr_set_channel_mapping(SwrContext*, LibC::Int*) : LibC::Int
-    fun build_matrix = swr_build_matrix(UInt64, UInt64, LibC::Double, LibC::Double, LibC::Double, LibC::Double, LibC::Double, LibC::Double*, LibC::Int, MatrixEncoding, Void*) : LibC::Int
+    fun build_matrix = swr_build_matrix(UInt64, UInt64, LibC::Double, LibC::Double, LibC::Double, LibC::Double, LibC::Double, LibC::Double*, LibC::Int, LibAVUtil::MatrixEncoding, Void*) : LibC::Int
     fun set_matrix = swr_set_matrix(SwrContext*, LibC::Double*, LibC::Int) : LibC::Int
     fun drop_output = swr_drop_output(SwrContext*, LibC::Int) : LibC::Int
     fun inject_silence = swr_inject_silence(SwrContext*, LibC::Int) : LibC::Int

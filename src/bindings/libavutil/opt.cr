@@ -1,6 +1,7 @@
 require "./rational"
 require "./log"
 require "./samplefmt"
+require "./pixfmt"
 
 module AV
   lib LibAVUtil

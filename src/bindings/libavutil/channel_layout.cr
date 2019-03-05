@@ -72,7 +72,7 @@ module AV
     fun get_channel_layout = av_get_channel_layout(LibC::Char*) : UInt64
     fun get_extended_channel_layout = av_get_extended_channel_layout(LibC::Char*, UInt64*, LibC::Int*) : LibC::Int
     fun get_channel_layout_string = av_get_channel_layout_string(LibC::Char*, LibC::Int, LibC::Int, UInt64) : Void
-    fun bprint_channel_layout = av_bprint_channel_layout(AVBPrint*, LibC::Int, UInt64) : Void
+    fun bprint_channel_layout = av_bprint_channel_layout(BPrint*, LibC::Int, UInt64) : Void
     fun get_channel_layout_nb_channels = av_get_channel_layout_nb_channels(UInt64) : LibC::Int
     fun get_default_channel_layout = av_get_default_channel_layout(LibC::Int) : Int64
     fun get_channel_layout_channel_index = av_get_channel_layout_channel_index(UInt64, UInt64) : LibC::Int

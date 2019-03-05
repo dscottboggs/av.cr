@@ -5,7 +5,7 @@ require "../src/bindings/libavutil/channel_layout"
 
 struct Resampler
   @internal : Pointer(AV::LibSWResample::SwrContext)
-  property codec : Pointer(AV::LibSWResample::CodecContext)
+  property codec : Pointer(AV::LibAVCodec::CodecContext)
   delegate :to_unsafe, to: @internal
   def initialize(for @codec)
     @internal = AV::LibSWResample.alloc

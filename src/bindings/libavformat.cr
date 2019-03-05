@@ -1,6 +1,7 @@
 require "./libavutil/avutil"
 require "./libavutil/log"
 require "./libavcodec"
+require "./libavio"
 module AV
   @[Link("avformat")]
   lib LibAVFormat
@@ -99,8 +100,8 @@ module AV
     type DeviceInfoList = Void
     type DeviceCapabilitiesQuery = Void
 
-    fun get_packet = avformat_get_packet(IOContext*, LibAVCodec::Packet*, LibC::Int) : LibC::Int
-    fun append_packet = avformat_append_packet(IOContext*, LibAVCodec::Packet*, LibC::Int) : LibC::Int
+    fun get_packet = avformat_get_packet(LibAVIO::IOContext*, LibAVCodec::Packet*, LibC::Int) : LibC::Int
+    fun append_packet = avformat_append_packet(LibAVIO::IOContext*, LibAVCodec::Packet*, LibC::Int) : LibC::Int
 
     struct Frac
       val : Int64
@@ -310,12 +311,17 @@ module AV
     end
     type FormatInternal = Void
 
+
+    alias AvFormatControlMessage = (FormatContext*, LibC::Int, Void*, LibC::SizeT) -> Void
+    alias OpenCallback = (FormatContext*, LibAVIO::IOContext**, LibC::Char*, LibC::Int, LibAVIO::IOInterruptCB*, LibAVUtil::Dictionary**) -> Void
+
+
     struct FormatContext
       av_class : LibAVUtil::Class*
       iformat : InputFormat*
       oformat : OutputFormat*
       priv_data : Void*
-      pb : IOContext*
+      pb : LibAVIO::IOContext*
       ctx_flags : LibC::Int
       nb_streams : LibC::UInt
       streams : Stream**
@@ -343,7 +349,7 @@ module AV
       start_time_realtime : Int64
       fps_probe_size : LibC::Int
       error_recognition : LibC::Int
-      interrupt_callback : IOInterruptCB
+      interrupt_callback : LibAVIO::IOInterruptCB
       debug : LibC::Int
       max_interleave_delta : Int64
       strict_std_compliance : LibC::Int
@@ -367,33 +373,33 @@ module AV
       format_whitelist : LibC::Char*
       internal : FormatInternal*
       io_repositioned : LibC::Int
-      video_codec : Codec*
-      audio_codec : Codec*
-      subtitle_codec : Codec*
-      data_codec : Codec*
+      video_codec : LibAVCodec::Codec*
+      audio_codec : LibAVCodec::Codec*
+      subtitle_codec : LibAVCodec::Codec*
+      data_codec : LibAVCodec::Codec*
       metadata_header_padding : LibC::Int
       opaque : Void*
       control_message_cb : AvFormatControlMessage
       output_ts_offset : Int64
       dump_separator : UInt8*
       data_codec_id : LibAVCodec::CodecID
-      open_cb : (FormatContext*, IOContext**, LibC::Char*, LibC::Int, IOInterruptCB*, LibAVUtil::Dictionary**) -> LibC::Int*
+      open_cb : (FormatContext*, LibAVIO::IOContext**, LibC::Char*, LibC::Int, LibAVIO::IOInterruptCB*, LibAVUtil::Dictionary**) -> LibC::Int*
       protocol_whitelist : LibC::Char*
-      io_open : (FormatContext*, IOContext**, LibC::Char*, LibC::Int, LibAVUtil::Dictionary**) -> LibC::Int*
-      io_close : (FormatContext*, IOContext*) -> Void*
+      io_open : (FormatContext*, LibAVIO::IOContext**, LibC::Char*, LibC::Int, LibAVUtil::Dictionary**) -> LibC::Int*
+      io_close : (FormatContext*, LibAVIO::IOContext*) -> Void*
       protocol_blacklist : LibC::Char*
       max_streams : LibC::Int
     end
 
     fun format_get_probe_score = av_format_get_probe_score(FormatContext*) : LibC::Int
-    fun format_get_video_codec = av_format_get_video_codec(FormatContext*) : Codec*
-    fun format_set_video_codec = av_format_set_video_codec(FormatContext*, Codec*) : Void
-    fun format_get_audio_codec = av_format_get_audio_codec(FormatContext*) : Codec*
-    fun format_set_audio_codec = av_format_set_audio_codec(FormatContext*, Codec*) : Void
-    fun format_get_subtitle_codec = av_format_get_subtitle_codec(FormatContext*) : Codec*
-    fun format_set_subtitle_codec = av_format_set_subtitle_codec(FormatContext*, Codec*) : Void
-    fun format_get_data_codec = av_format_get_data_codec(FormatContext*) : Codec*
-    fun format_set_data_codec = av_format_set_data_codec(FormatContext*, Codec*) : Void
+    fun format_get_video_codec = av_format_get_video_codec(FormatContext*) : LibAVCodec::Codec*
+    fun format_set_video_codec = av_format_set_video_codec(FormatContext*, LibAVCodec::Codec*) : Void
+    fun format_get_audio_codec = av_format_get_audio_codec(FormatContext*) : LibAVCodec::Codec*
+    fun format_set_audio_codec = av_format_set_audio_codec(FormatContext*, LibAVCodec::Codec*) : Void
+    fun format_get_subtitle_codec = av_format_get_subtitle_codec(FormatContext*) : LibAVCodec::Codec*
+    fun format_set_subtitle_codec = av_format_set_subtitle_codec(FormatContext*, LibAVCodec::Codec*) : Void
+    fun format_get_data_codec = av_format_get_data_codec(FormatContext*) : LibAVCodec::Codec*
+    fun format_set_data_codec = av_format_set_data_codec(FormatContext*, LibAVCodec::Codec*) : Void
     fun format_get_metadata_header_padding = av_format_get_metadata_header_padding(FormatContext*) : LibC::Int
     fun format_set_metadata_header_padding = av_format_set_metadata_header_padding(FormatContext*, LibC::Int) : Void
     fun format_get_opaque = av_format_get_opaque(FormatContext*) : Void*
@@ -423,24 +429,24 @@ module AV
     fun alloc_context = avformat_alloc_context : FormatContext*
     fun free_context = avformat_free_context(FormatContext*) : Void
     fun get_class = avformat_get_class : LibAVUtil::Class*
-    fun new_stream = avformat_new_stream(FormatContext*, Codec*) : Stream*
-    fun stream_add_side_data = av_stream_add_side_data(Stream*, PacketSideDataType, UInt8*, LibC::SizeT) : LibC::Int
-    fun stream_new_side_data = av_stream_new_side_data(Stream*, PacketSideDataType, LibC::Int) : UInt8*
-    fun stream_get_side_data = av_stream_get_side_data(Stream*, PacketSideDataType, LibC::Int*) : UInt8*
+    fun new_stream = avformat_new_stream(FormatContext*, LibAVCodec::Codec*) : Stream*
+    fun stream_add_side_data = av_stream_add_side_data(Stream*, LibAVCodec::PacketSideDataType, UInt8*, LibC::SizeT) : LibC::Int
+    fun stream_new_side_data = av_stream_new_side_data(Stream*, LibAVCodec::PacketSideDataType, LibC::Int) : UInt8*
+    fun stream_get_side_data = av_stream_get_side_data(Stream*, LibAVCodec::PacketSideDataType, LibC::Int*) : UInt8*
     fun new_program = av_new_program(FormatContext*, LibC::Int) : Program*
     fun alloc_output_context2 = avformat_alloc_output_context2(FormatContext**, OutputFormat*, LibC::Char*, LibC::Char*) : LibC::Int
     fun find_input_format = av_find_input_format(LibC::Char*) : InputFormat*
     fun probe_input_format = av_probe_input_format(ProbeData*, LibC::Int) : InputFormat*
     fun probe_input_format2 = av_probe_input_format2(ProbeData*, LibC::Int, LibC::Int*) : InputFormat*
     fun probe_input_format3 = av_probe_input_format3(ProbeData*, LibC::Int, LibC::Int*) : InputFormat*
-    fun probe_input_buffer2 = av_probe_input_buffer2(IOContext*, InputFormat**, LibC::Char*, Void*, LibC::UInt, LibC::UInt) : LibC::Int
-    fun probe_input_buffer = av_probe_input_buffer(IOContext*, InputFormat**, LibC::Char*, Void*, LibC::UInt, LibC::UInt) : LibC::Int
+    fun probe_input_buffer2 = av_probe_input_buffer2(LibAVIO::IOContext*, InputFormat**, LibC::Char*, Void*, LibC::UInt, LibC::UInt) : LibC::Int
+    fun probe_input_buffer = av_probe_input_buffer(LibAVIO::IOContext*, InputFormat**, LibC::Char*, Void*, LibC::UInt, LibC::UInt) : LibC::Int
     fun open_input = avformat_open_input(FormatContext**, LibC::Char*, InputFormat*, LibAVUtil::Dictionary**) : LibC::Int
     fun demuxer_open = av_demuxer_open(FormatContext*) : LibC::Int
     fun find_stream_info = avformat_find_stream_info(FormatContext*, LibAVUtil::Dictionary**) : LibC::Int
     fun find_program_from_stream = av_find_program_from_stream(FormatContext*, Program*, LibC::Int) : Program*
     fun program_add_stream_index = av_program_add_stream_index(FormatContext*, LibC::Int, LibC::UInt) : Void
-    fun find_best_stream = av_find_best_stream(FormatContext*, LibAVUtil::MediaType, LibC::Int, LibC::Int, Codec**, LibC::Int) : LibC::Int
+    fun find_best_stream = av_find_best_stream(FormatContext*, LibAVUtil::MediaType, LibC::Int, LibC::Int, LibAVCodec::Codec**, LibC::Int) : LibC::Int
     fun read_frame = av_read_frame(FormatContext*, LibAVCodec::Packet*) : LibC::Int
     fun seek_frame = av_seek_frame(FormatContext*, LibC::Int, Int64, LibC::Int) : LibC::Int
     fun seek_file = avformat_seek_file(FormatContext*, LibC::Int, Int64, Int64, Int64, LibC::Int) : LibC::Int
@@ -482,7 +488,7 @@ module AV
     fun get_mov_video_tags = avformat_get_mov_video_tags : CodecTag*
     fun get_mov_audio_tags = avformat_get_mov_audio_tags : CodecTag*
     fun guess_sample_aspect_ratio = av_guess_sample_aspect_ratio(FormatContext*, Stream*, LibAVUtil::Frame*) : LibAVUtil::Rational
-    fun guess_frame_rate = av_guess_frame_rate(FormatContext*, Stream*, LibAVUtil::Frame*) : LibAVUtil::LibAVUtil::Rational
+    fun guess_frame_rate = av_guess_frame_rate(FormatContext*, Stream*, LibAVUtil::Frame*) : LibAVUtil::Rational
     fun match_stream_specifier = avformat_match_stream_specifier(FormatContext*, Stream*, LibC::Char*) : LibC::Int
     fun queue_attached_pictures = avformat_queue_attached_pictures(FormatContext*) : LibC::Int
     fun apply_bitstream_filters = av_apply_bitstream_filters(LibAVCodec::CodecContext*, LibAVCodec::Packet*, LibAVCodec::BitStreamFilterContext*) : LibC::Int

@@ -33,7 +33,7 @@ module AV
     fun is_open = avresample_is_open(AudioResampleContext*) : LibC::Int
     fun close = avresample_close(AudioResampleContext*) : Void
     fun free = avresample_free(AudioResampleContext**) : Void
-    fun build_matrix = avresample_build_matrix(UInt64, UInt64, LibC::Double, LibC::Double, LibC::Double, LibC::Int, LibC::Double*, LibC::Int, MatrixEncoding) : LibC::Int
+    fun build_matrix = avresample_build_matrix(UInt64, UInt64, LibC::Double, LibC::Double, LibC::Double, LibC::Int, LibC::Double*, LibC::Int, LibAVUtil::MatrixEncoding) : LibC::Int
     fun get_matrix = avresample_get_matrix(AudioResampleContext*, LibC::Double*, LibC::Int) : LibC::Int
     fun set_matrix = avresample_set_matrix(AudioResampleContext*, LibC::Double*, LibC::Int) : LibC::Int
     fun set_channel_mapping = avresample_set_channel_mapping(AudioResampleContext*, LibC::Int*) : LibC::Int

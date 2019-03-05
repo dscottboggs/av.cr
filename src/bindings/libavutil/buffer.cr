@@ -1,8 +1,7 @@
 module AV
   lib LibAVUtil
     # A reference counted buffer type.
-    struct Buffer
-    end
+    type Buffer = Void*
     struct BufferRef
       buffer : Buffer
       data : UInt8*
