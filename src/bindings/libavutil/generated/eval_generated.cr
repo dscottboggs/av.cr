@@ -1,6 +1,6 @@
 module AV
 lib LibAVUtil
-#   AVUTIL_EVAL_H =
+#   AVUTIL_EVAL_H = 
     timeval_defined = 1
   struct Timeval
     tv_sec : LibC::Long

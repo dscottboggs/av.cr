@@ -8,7 +8,7 @@ module AV
     fun make_q = av_make_q(LibC::Int, LibC::Int) : Rational
     fun cmp_q = av_cmp_q(Rational, Rational) : LibC::Int
     fun q2d = av_q2d(Rational) : LibC::Double
-    fun reduce = av_reduce(LibC::Int*, LibC::Int*, Int64T, Int64T, Int64T) : LibC::Int
+    fun reduce = av_reduce(LibC::Int*, LibC::Int*, Int64, Int64, Int64) : LibC::Int
     fun mul_q = av_mul_q(Rational, Rational) : Rational
     fun div_q = av_div_q(Rational, Rational) : Rational
     fun add_q = av_add_q(Rational, Rational) : Rational

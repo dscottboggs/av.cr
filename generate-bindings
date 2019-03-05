@@ -9,13 +9,13 @@ bind_lib() {
 	$autobind_exe --lib-name=$1 \
                   -I/usr/include \
                   --parent-module=AV \
-                  $2.h > "src/bindings/$(basename $2)_generated.cr"
+                  $2.h > "src/bindings/generated/$(basename $2)_generated.cr"
 }
 bind_util() {
 	$autobind_exe --lib-name=$1 \
                   -I/usr/include \
                   --parent-module=AV \
-                  $2.h > "src/bindings/libavutil/$(basename $2)_generated.cr"
+                  $2.h > "src/bindings/libavutil/generated/$(basename $2)_generated.cr"
 
 }
 
@@ -28,8 +28,8 @@ for lib in $main_libs; do
   bind_lib LibAV${lib^} libav$lib/$lib
 done
 
-for util in $utils; do 
+for util in $utils; do
   bind_util LibAVUtil libavutil/$util
 done
 
-
+bind_lib LibAVIO libavformat/avio

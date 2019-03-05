@@ -1,7 +1,10 @@
+require "./opt"
 module AV
   lib LibAVUtil
     #   AV_IS_INPUT_DEVICE =  category)((( category)== AV_CLASS_CATEGORY_DEVICE_VIDEO_INPUT)||(( category)== AV_CLASS_CATEGORY_DEVICE_AUDIO_INPUT)||(( category)== AV_CLASS_CATEGORY_DEVICE_INPUT)
     #   AV_IS_OUTPUT_DEVICE =  category)((( category)== AV_CLASS_CATEGORY_DEVICE_VIDEO_OUTPUT)||(( category)== AV_CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT)||(( category)== AV_CLASS_CATEGORY_DEVICE_OUTPUT)
+    type VaList = Void*
+    type VaListTag = Void*
     enum LogLevel
       QUIET      =  -8
       PANIC      = 0o0
@@ -12,7 +15,7 @@ module AV
       VERBOSE    =  40
       DEBUG      =  48
       TRACE      =  56
-      MAX_OFFSET = AV_LOG_TRACE - AV_LOG_QUIET
+      MAX_OFFSET = TRACE - QUIET
     end
     #   AV_LOG_C =  x)(( x)<<8
     #   av_dlog =  pctx,...) do{ if(0) av_log( pctx, AV_LOG_DEBUG, __VA_ARGS__);} while(0
@@ -38,7 +41,6 @@ module AV
       DEVICE_INPUT        = 45
       NB                  = 46
     end
-    type OptionRanges = Void
 
     struct Class
       class_name : LibC::Char*

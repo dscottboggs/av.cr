@@ -62,8 +62,8 @@ module AV
     fun get_pix_fmt = av_get_pix_fmt(LibC::Char*) : PixelFormat
     fun get_pix_fmt_name = av_get_pix_fmt_name(PixelFormat) : LibC::Char*
     fun get_pix_fmt_string = av_get_pix_fmt_string(LibC::Char*, LibC::Int, PixelFormat) : LibC::Char*
-    fun read_image_line = av_read_image_line(UInt16*, StaticArray(Uint8T*, 4), StaticArray(LibC::Int, 4), PixFmtDescriptor*, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int) : Void
-    fun write_image_line = av_write_image_line(Uint16T*, StaticArray(UInt8*, 4), StaticArray(LibC::Int, 4), PixFmtDescriptor*, LibC::Int, LibC::Int, LibC::Int, LibC::Int) : Void
+    fun read_image_line = av_read_image_line(UInt16*, StaticArray(UInt8*, 4), StaticArray(LibC::Int, 4), PixFmtDescriptor*, LibC::Int, LibC::Int, LibC::Int, LibC::Int, LibC::Int) : Void
+    fun write_image_line = av_write_image_line(UInt16*, StaticArray(UInt8*, 4), StaticArray(LibC::Int, 4), PixFmtDescriptor*, LibC::Int, LibC::Int, LibC::Int, LibC::Int) : Void
     fun pix_fmt_swap_endianness = av_pix_fmt_swap_endianness(PixelFormat) : PixelFormat
     fun get_pix_fmt_loss = av_get_pix_fmt_loss(PixelFormat, PixelFormat, LibC::Int) : LibC::Int
     fun find_best_pix_fmt_of_2 = av_find_best_pix_fmt_of_2(PixelFormat, PixelFormat, PixelFormat, LibC::Int, LibC::Int*) : PixelFormat

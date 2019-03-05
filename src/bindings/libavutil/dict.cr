@@ -17,7 +17,7 @@ module AV
     fun av_dict_get(Dictionary*, LibC::Char*, DictionaryEntry*, LibC::Int) : DictionaryEntry*
     fun av_dict_count(Dictionary*) : LibC::Int
     fun av_dict_set(Dictionary**, LibC::Char*, LibC::Char*, LibC::Int) : LibC::Int
-    fun av_dict_set_int(Dictionary**, LibC::Char*, Int64T, LibC::Int) : LibC::Int
+    fun av_dict_set_int(Dictionary**, LibC::Char*, Int64, LibC::Int) : LibC::Int
     fun av_dict_parse_string(Dictionary**, LibC::Char*, LibC::Char*, LibC::Char*, LibC::Int) : LibC::Int
     fun av_dict_copy(Dictionary**, Dictionary*, LibC::Int) : LibC::Int
     fun av_dict_free(Dictionary**) : Void
